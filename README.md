@@ -15,3 +15,4 @@ and devices running iOS8 beta.
 
 ![game menu](http://i165.photobucket.com/albums/u49/kolbenwarrior/th_iOSSimulatorScreenShotJun12201412405PM_zps445080d1.png "Game Menu")
 me scene](http://i165.photobucket.com/albums/u49/kolbenwarrior/th_iOSSimulatorScreenShotJun12201412405PM_zps445080d1.png "Game Scene")
+
