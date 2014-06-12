@@ -57,6 +57,3 @@ let kSoundHitGround = "hitGround.caf"
 // Positions
 let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)
 
-// Game Play
-let kGroundSpeed:CGFloat = 2.75
-let kSpawnDelay:CGFloat = 1.5
