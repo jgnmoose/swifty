@@ -14,7 +14,11 @@ class Player: SKSpriteNode {
         super.init(imageNamed: name)
         
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height / 2 )
+        //self.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "player0.png"), size: self.frame.size)
         self.physicsBody.dynamic = true
+        self.physicsBody.categoryBitMask = Contact.Player
+        self.physicsBody.collisionBitMask = Contact.Scene
+        self.physicsBody.contactTestBitMask = Contact.Object | Contact.Scene
         
         self.animate()
     }
@@ -40,7 +44,7 @@ class Player: SKSpriteNode {
     // Update Player
     func update() {
         if self.physicsBody.velocity.dy > 30.0 {
-            self.zRotation = 3.14 / 6.0
+            self.zRotation = CGFloat(M_PI / 6.0)
         } else if self.physicsBody.velocity.dy < -100.0 {
             self.zRotation = -1 * (3.14 / 4.0)
         } else {

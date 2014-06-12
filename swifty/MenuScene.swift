@@ -44,14 +44,6 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         // Sky
         self.backgroundColor = SKColor.whiteColor()
         
-        // Clouds
-        let clouds = SKSpriteNode(imageNamed: "cloudmonster")
-        clouds.anchorPoint = CGPointMake(0.5, 0.5)
-        //clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
-        clouds.position = kCloudPosition
-        clouds.zPosition = GameLayer.Sky
-        self.addChild(clouds)
-        
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
@@ -70,7 +62,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         // City
         let city = SKSpriteNode(imageNamed: "city")
         city.anchorPoint = CGPointZero
-        city.position = CGPointMake(0, ground.position.y)
+        city.position = CGPointMake(0, ground.size.height)
         city.zPosition = GameLayer.City
         self.addChild(city)
         

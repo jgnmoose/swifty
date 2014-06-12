@@ -17,9 +17,10 @@ class GameLayer {
     class var Background:Float  { return 0 }
     class var Sky:Float         { return 1 }
     class var City:Float        { return 2 }
-    class var Ground:Float      { return 3 }
-    class var Game:Float        { return 4 }
-    class var UI:Float          { return 5 }
+    class var Spikes:Float      { return 3 }
+    class var Ground:Float      { return 4 }
+    class var Game:Float        { return 5 }
+    class var UI:Float          { return 6 }
 }
 
 class Contact {
@@ -50,7 +51,12 @@ let kSoundBounce = "bounce.caf"
 let kSoundPop = "pop.caf"
 let kSoundWhack = "whack.caf"
 let kSoundFly = "flapping.caf"
+let kSoundFalling = "falling.caf"
+let kSoundHitGround = "hitGround.caf"
 
 // Positions
-let kCloudPosition = CGPointMake(viewSize.width * 0.9, viewSize.height * 0.65)
 let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)
+
+// Game Play
+let kGroundSpeed:CGFloat = 2.75
+let kSpawnDelay:CGFloat = 1.5

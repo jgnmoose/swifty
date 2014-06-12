@@ -19,7 +19,6 @@
 		3F28A08B194968F10006E86F /* copycat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F28A08A194968F10006E86F /* copycat.mp3 */; };
 		3FBB19931949399A0017EF63 /* GameSceneiPad.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19921949399A0017EF63 /* GameSceneiPad.sks */; };
 		3FBB1995194939BF0017EF63 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB1994194939BF0017EF63 /* Player.swift */; };
-		3FBB1997194939D80017EF63 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB1996194939D80017EF63 /* Spike.swift */; };
 		3FBB199919493AAA0017EF63 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB199819493AAA0017EF63 /* MenuScene.swift */; };
 		3FBB199C19493E820017EF63 /* Fipps-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199B19493E820017EF63 /* Fipps-Regular.otf */; };
 		3FBB19A71949425D0017EF63 /* bounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199E1949425D0017EF63 /* bounce.caf */; };
@@ -59,7 +58,6 @@
 		3F28A08A194968F10006E86F /* copycat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = copycat.mp3; sourceTree = "<group>"; };
 		3FBB19921949399A0017EF63 /* GameSceneiPad.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameSceneiPad.sks; sourceTree = "<group>"; };
 		3FBB1994194939BF0017EF63 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		3FBB1996194939D80017EF63 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
 		3FBB199819493AAA0017EF63 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		3FBB199B19493E820017EF63 /* Fipps-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fipps-Regular.otf"; sourceTree = "<group>"; };
 		3FBB199E1949425D0017EF63 /* bounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bounce.caf; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 				3F24F0B9194935840066BF14 /* Storyboard */,
 				3F24F098194935760066BF14 /* AppDelegate.swift */,
 				3FBB1994194939BF0017EF63 /* Player.swift */,
-				3FBB1996194939D80017EF63 /* Spike.swift */,
 				3FBB199819493AAA0017EF63 /* MenuScene.swift */,
 				3F24F09C194935760066BF14 /* GameScene.swift */,
 				3F24F09E194935760066BF14 /* GameViewController.swift */,
@@ -329,7 +326,6 @@
 				3F24F099194935760066BF14 /* AppDelegate.swift in Sources */,
 				3FBB199919493AAA0017EF63 /* MenuScene.swift in Sources */,
 				3FBB1995194939BF0017EF63 /* Player.swift in Sources */,
-				3FBB1997194939D80017EF63 /* Spike.swift in Sources */,
 				3F24F0BE194939450066BF14 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,11 +11,12 @@ import AVFoundation
 
 var player:Player!
 var ground:SKSpriteNode!
-var touchEnabled:Bool!
+var retry:SKLabelNode!
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     var state:GameState = .Tutorial
+    var pipeGap:CGFloat = 175.0
     
     override func didMoveToView(view: SKView) {
         viewSize = self.frame.size
@@ -38,24 +39,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        var touch:UITouch = touches.anyObject() as UITouch
+        var touchLocation = touch.locationInNode(self)
+
         if self.scene.userInteractionEnabled {
             for touch:AnyObject in touches {
                 switch state {
                 case GameState.Tutorial:
                     self.switchToPlay()
-                    if kDebug {
-                        println("Tutorial Touch")
-                    }
+                    
                 case GameState.Play:
                     player.fly()
-                    if kDebug {
-                        println("Play Touch")
-                    }
+                    
                 case GameState.GameOver:
-                    println("Game Over")
-                    if kDebug {
-                        println("Game Over Touch")
+                    if retry.containsPoint(touchLocation) {
+                        self.switchToNewGame()
                     }
+                    
                 }
             }
 
@@ -70,24 +70,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             case GameState.Play:
                 player.update()
             case GameState.GameOver:
-                println("Game Over")
+                return
             }
         }
     }
     
+    func didBeginContact(contact: SKPhysicsContact) {
+        var other:SKPhysicsBody = contact.bodyA.categoryBitMask == Contact.Player ? contact.bodyB : contact.bodyA
+        
+        if state == GameState.GameOver {
+            return
+        } else {
+            if other.categoryBitMask == Contact.Scene {
+                // Player hit the ground or edge of the scene
+                if kDebug {
+                    println("Player Hit Ground")
+                }
+                
+                self.runAction(SKAction.playSoundFileNamed(kSoundBounce, waitForCompletion: false))
+                
+                self.switchToGameOver()
+                
+            } else if other.categoryBitMask == Contact.Object {
+                // Playr hit some spikes
+                if kDebug {
+                    println("Player Hit Spikes")
+                }
+                
+                self.runAction(SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false))
+                
+                self.switchToGameOver()
+            }
+        }
+    }
+    
+    // Setup functions
     func setupWorld () {
         var viewSize = self.frame.size
         
         // Sky
         self.backgroundColor = SKColor.whiteColor()
-        
-        // Clouds
-        let clouds = SKSpriteNode(imageNamed: "cloudmonster")
-        clouds.anchorPoint = CGPointMake(0.5, 0.5)
-        //clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
-        clouds.position = kCloudPosition
-        clouds.zPosition = GameLayer.Sky
-        self.addChild(clouds)
         
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
@@ -102,16 +124,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         ground.anchorPoint = CGPointZero
         ground.position = CGPointZero
         ground.zPosition = GameLayer.Ground
+        ground.name = "Ground"
+        
+        let groundCopy = SKSpriteNode(imageNamed: "ground")
+        groundCopy.anchorPoint = CGPointZero
+        groundCopy.position = CGPointMake(ground.size.width, 0)
+        groundCopy.zPosition = GameLayer.Ground
+        groundCopy.name = "Ground"
+        ground.addChild(groundCopy)
         self.addChild(ground)
         
         // City
         let city = SKSpriteNode(imageNamed: "city")
         city.anchorPoint = CGPointZero
-        city.position = CGPointMake(0, ground.position.y)
+        city.position = CGPointMake(0, ground.size.height)
         city.zPosition = GameLayer.City
         self.addChild(city)
         
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(0, ground.size.height, viewSize.width, (viewSize.height - ground.size.height)))
+        self.physicsBody.categoryBitMask = Contact.Scene
     }
     
     func setupPlayer () {
@@ -122,10 +153,58 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         self.addChild(player)
     }
     
+    
+    // Play States
     func switchToPlay () {
         self.physicsWorld.gravity = CGVectorMake(0, -5.0)
         state = GameState.Play
         self.scene.userInteractionEnabled = true
+        self.scrollForeground()
+        self.startSpawningSpikes()
+    }
+    
+    func switchToGameOver () {
+        state = GameState.GameOver
+        
+        self.stopSpawningSpikes()
+        self.stopScrollingForeground()
+        
+        self.runAction(SKAction.playSoundFileNamed(kSoundFalling, waitForCompletion: false))
+        
+        var gameOverLabel = SKLabelNode(fontNamed: kGameFont)
+        gameOverLabel.text = "Game Over"
+        gameOverLabel.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.7)
+        gameOverLabel.zPosition = GameLayer.UI
+        gameOverLabel.fontSize = 60
+        gameOverLabel.fontColor = SKColor.blackColor()
+        gameOverLabel.setScale(0)
+        
+        self.addChild(gameOverLabel)
+        
+        gameOverLabel.runAction(SKAction.scaleTo(1.0, duration: 1.0))
+        
+        retry = SKLabelNode(fontNamed: kGameFont)
+        retry.text = "Retry"
+        retry.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5)
+        retry.zPosition = GameLayer.UI
+        retry.fontSize = 60
+        retry.fontColor = SKColor.blackColor()
+        self.addChild(retry)
+    }
+    
+    func switchToNewGame () {
+        var gameScene = GameScene(size: viewSize)
+        gameScene.scaleMode = .AspectFill
+        var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
+        self.view.presentScene(gameScene, transition: gameTransition)
+//        self.runAction(SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false))
+//        
+//        bounceTimer.invalidate()
+//        
+//        var gameScene = GameScene(size: viewSize)
+//        gameScene.scaleMode = .AspectFill
+//        var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
+//        self.view.presentScene(gameScene, transition: gameTransition)
     }
     
     func runCountDown () {
@@ -167,6 +246,103 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                     })
                 })
         })
+    }
+    
+    // Scrolling
+    func scrollForeground () {
+        var ground = self.childNodeWithName("Ground")
+        var moveLeft = SKAction.moveByX(-ground.frame.size.width, y: 0, duration: 3.0)
+        var reset = SKAction.moveTo(CGPointMake(0, 0), duration: 0)
+        var sequence = SKAction.sequence([moveLeft, reset])
+        ground.runAction(SKAction.repeatActionForever(sequence))
+
+    }
+    
+    func stopScrollingForeground () {
+        var ground = self.childNodeWithName("Ground")
+        ground.removeAllActions()
+    }
+    
+    // Obstacles
+    func createSpike (type: String) -> SKSpriteNode {
+        var spike:SKSpriteNode!
+        
+        switch type {
+            case "top":
+                spike = SKSpriteNode(imageNamed: "spiketop")
+                spike.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "spiketop"), size: spike.frame.size)
+            case "bottom":
+                spike = SKSpriteNode(imageNamed: "spikebottom")
+                spike.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "spikebottom"), size: spike.frame.size)
+            default:
+                spike = SKSpriteNode(imageNamed: "spikebottom")
+                spike.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "spikebottom"), size: spike.frame.size)
+        }
+        
+        spike.zPosition = GameLayer.Spikes
+        
+        //spike.physicsBody = SKPhysicsBody(rectangleOfSize: spike.size)
+        spike.physicsBody.dynamic = false
+        spike.physicsBody.categoryBitMask = Contact.Object
+        spike.physicsBody.contactTestBitMask = Contact.Player
+        
+        return spike
+    }
+    
+    func spawnSpikes () {
+        // Bottom spike
+        var bottomSpike = self.createSpike("bottom")
+        bottomSpike.name = "BottomSpike"
+        var startX = viewSize.width + bottomSpike.size.width / 2
+        
+        var bottomHeight = UInt32(viewSize.height / 4)
+        var bottomY = arc4random() % bottomHeight + bottomHeight
+        
+        bottomSpike.position = CGPointMake(startX, CGFloat(bottomHeight))
+        
+        self.addChild(bottomSpike)
+        
+        
+        // Top spike
+        var topSpike = self.createSpike("top")
+        topSpike.name = "TopSpike"
+        topSpike.position = CGPointMake(startX, CGFloat(bottomHeight) + topSpike.size.height + pipeGap)
+        
+        self.addChild(topSpike)
+        
+        //var moveX = -viewSize.width + bottomSpike.size.width
+        //var moveDuration = moveX / kGroundSpeed
+        
+        var scroll = SKAction.moveToX(0 - bottomSpike.size.width, duration: 3.0)
+        var remove = SKAction.removeFromParent()
+        var sequence = SKAction.sequence([scroll, remove])
+        
+        bottomSpike.runAction(sequence)
+        topSpike.runAction(sequence)
+    }
+    
+    func startSpawningSpikes () {
+        var delay = SKAction.waitForDuration(1.5)
+        var spawn = SKAction.runBlock({
+            self.spawnSpikes()
+        })
+        var sequence = SKAction.sequence([delay, spawn])
+        var repeat = SKAction.repeatActionForever(sequence)
+        var spawnSequence = SKAction.sequence([delay, repeat])
+        
+        self.runAction(spawnSequence, withKey: "Spawn")
+    }
+    
+    func stopSpawningSpikes () {
+        self.removeActionForKey("Spawn")
+        
+        if var topNode = self.childNodeWithName("TopSpike") {
+            topNode.removeAllActions()
+        }
+        
+        if var bottomNode = self.childNodeWithName("BottomSpike") {
+            bottomNode.removeAllActions()
+        }
     }
     
     func flashBackground () {
