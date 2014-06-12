@@ -16,6 +16,7 @@
 		3F24F0B0194935770066BF14 /* swiftyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F24F0AF194935770066BF14 /* swiftyTests.swift */; };
 		3F24F0BC1949391D0066BF14 /* artwork.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3F24F0BB1949391D0066BF14 /* artwork.atlas */; };
 		3F24F0BE194939450066BF14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F24F0BD194939450066BF14 /* Constants.swift */; };
+		3F28A08B194968F10006E86F /* copycat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F28A08A194968F10006E86F /* copycat.mp3 */; };
 		3FBB19931949399A0017EF63 /* GameSceneiPad.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19921949399A0017EF63 /* GameSceneiPad.sks */; };
 		3FBB1995194939BF0017EF63 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB1994194939BF0017EF63 /* Player.swift */; };
 		3FBB1997194939D80017EF63 /* Spike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB1996194939D80017EF63 /* Spike.swift */; };
@@ -56,6 +57,7 @@
 		3F24F0AF194935770066BF14 /* swiftyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftyTests.swift; sourceTree = "<group>"; };
 		3F24F0BB1949391D0066BF14 /* artwork.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = artwork.atlas; sourceTree = "<group>"; };
 		3F24F0BD194939450066BF14 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Classes/Constants.swift; sourceTree = "<group>"; };
+		3F28A08A194968F10006E86F /* copycat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = copycat.mp3; sourceTree = "<group>"; };
 		3FBB19921949399A0017EF63 /* GameSceneiPad.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameSceneiPad.sks; sourceTree = "<group>"; };
 		3FBB1994194939BF0017EF63 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3FBB1996194939D80017EF63 /* Spike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spike.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		3F24F0BA1949391D0066BF14 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3F28A089194968F10006E86F /* Music */,
 				3FBB199D1949425D0017EF63 /* Sounds */,
 				3FBB199A19493E6C0017EF63 /* Fonts */,
 				3F24F0BB1949391D0066BF14 /* artwork.atlas */,
@@ -178,6 +181,14 @@
 				3FBB19921949399A0017EF63 /* GameSceneiPad.sks */,
 			);
 			name = Scenes;
+			sourceTree = "<group>";
+		};
+		3F28A089194968F10006E86F /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				3F28A08A194968F10006E86F /* copycat.mp3 */,
+			);
+			path = Music;
 			sourceTree = "<group>";
 		};
 		3FBB199A19493E6C0017EF63 /* Fonts */ = {
@@ -296,6 +307,7 @@
 				3FBB19AA1949425D0017EF63 /* falling.caf in Resources */,
 				3FBB19AD1949425D0017EF63 /* oink.caf in Resources */,
 				3FBB19AF1949425D0017EF63 /* whack.caf in Resources */,
+				3F28A08B194968F10006E86F /* copycat.mp3 in Resources */,
 				3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */,
 				3FBB19AB1949425D0017EF63 /* flapping.caf in Resources */,
 				3F24F0A2194935760066BF14 /* Main.storyboard in Resources */,

@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 
 
 let kDebug = true
@@ -29,9 +30,14 @@ class Contact {
 
 // Shared vars
 var viewSize:CGSize!
+var musicPlayer:AVAudioPlayer!
 
 // Fonts
 let kGameFont = "Fipps-Regular"
+
+// Music
+let kMusicGame = "copycat"
+let kMusicType = "mp3"
 
 // Sounds
 let kSoundBounce = "bounce.caf"

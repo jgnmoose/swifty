@@ -9,7 +9,7 @@
 import SpriteKit
 import AVFoundation
 
-class MenuScene: SKScene {
+class MenuScene: SKScene, AVAudioPlayerDelegate {
     
     var playButton:SKLabelNode!
     var bounceTimer:NSTimer!
@@ -22,6 +22,8 @@ class MenuScene: SKScene {
         }
         
         self.setupMenu()
+        
+        self.playBackgrounMusic(kMusicGame)
 
         bounceTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: Selector("animatePlay"), userInfo: nil, repeats: true)
     }
@@ -107,4 +109,16 @@ class MenuScene: SKScene {
         var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
         self.view.presentScene(gameScene, transition: gameTransition)
     }
+    
+    func playBackgrounMusic(fileName: String) {
+        var gameMusic = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(fileName, ofType: kMusicType))
+        var playerError:NSError?
+        musicPlayer = AVAudioPlayer(contentsOfURL: gameMusic, error: &playerError)
+        musicPlayer.delegate = self
+        musicPlayer.numberOfLoops = -1
+        musicPlayer.volume = 1.0
+        musicPlayer.prepareToPlay()
+        musicPlayer.play()
+    }
+
 }
