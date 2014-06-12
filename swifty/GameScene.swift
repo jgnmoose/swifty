@@ -197,14 +197,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         gameScene.scaleMode = .AspectFill
         var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
         self.view.presentScene(gameScene, transition: gameTransition)
-//        self.runAction(SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false))
-//        
-//        bounceTimer.invalidate()
-//        
-//        var gameScene = GameScene(size: viewSize)
-//        gameScene.scaleMode = .AspectFill
-//        var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
-//        self.view.presentScene(gameScene, transition: gameTransition)
     }
     
     func runCountDown () {
