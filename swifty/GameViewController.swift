@@ -18,7 +18,7 @@ extension SKNode {
         var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
         
         archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-        let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+        let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as MenuScene
         archiver.finishDecoding()
         return scene
     }
@@ -29,11 +29,21 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+        var deviceType:String?
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            deviceType = "GameSceneiPad"
+        } else {
+            deviceType = "GameSceneiPhone"
+        }
+        
+        if let scene = MenuScene.unarchiveFromFile(deviceType!) as? MenuScene  {
             // Configure the view.
             let skView = self.view as SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
+            if kDebug {
+                skView.showsFPS = true
+                skView.showsNodeCount = true
+                skView.showsDrawCount = true
+            }
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
@@ -45,15 +55,24 @@ class GameViewController: UIViewController {
         }
     }
 
+    // Auto rotate the view
     override func shouldAutorotate() -> Bool {
         return true
     }
-
+    
+    // Hide the status bar
+    override func prefersStatusBarHidden() -> Bool  {
+        return true
+    }
+    
+    // Supported Interface Orientations
     override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.toRaw())
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            // iPad can be Portrait or Portrait Upsidedown
+            return Int(UIInterfaceOrientationMask.Portrait.toRaw() | UIInterfaceOrientationMask.PortraitUpsideDown.toRaw())
         } else {
-            return Int(UIInterfaceOrientationMask.All.toRaw())
+            // iPhone/iPod only support Portrait
+            return Int(UIInterfaceOrientationMask.Portrait.toRaw())
         }
     }
 
