@@ -47,14 +47,16 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         // Clouds
         let clouds = SKSpriteNode(imageNamed: "cloudmonster")
         clouds.anchorPoint = CGPointMake(0.5, 0.5)
-        clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
+        //clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
+        clouds.position = kCloudPosition
         clouds.zPosition = GameLayer.Sky
         self.addChild(clouds)
         
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
+        //moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
+        moon.position = kMoonPosition
         moon.zPosition = GameLayer.Sky
         self.addChild(moon)
         
@@ -92,8 +94,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
     }
     
     func animatePlay () {
-        var bounceLarger = SKAction.scaleTo(1.25, duration: 0.25)
-        var bounceNormal = SKAction.scaleTo(1.0, duration: 0.25)
+        var bounceLarger = SKAction.scaleTo(1.25, duration: 0.15)
+        var bounceNormal = SKAction.scaleTo(1.0, duration: 0.15)
         var bounceSound = SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false)
         var bounceSequence = SKAction.sequence([bounceLarger, bounceSound, bounceNormal])
         playButton.runAction(SKAction.repeatAction(bounceSequence, count: 3))
@@ -116,7 +118,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         musicPlayer = AVAudioPlayer(contentsOfURL: gameMusic, error: &playerError)
         musicPlayer.delegate = self
         musicPlayer.numberOfLoops = -1
-        musicPlayer.volume = 1.0
+        musicPlayer.volume = 0.75
         musicPlayer.prepareToPlay()
         musicPlayer.play()
     }

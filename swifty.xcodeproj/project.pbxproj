@@ -28,7 +28,6 @@
 		3FBB19AA1949425D0017EF63 /* falling.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A11949425D0017EF63 /* falling.caf */; };
 		3FBB19AB1949425D0017EF63 /* flapping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A21949425D0017EF63 /* flapping.caf */; };
 		3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A31949425D0017EF63 /* hitGround.caf */; };
-		3FBB19AD1949425D0017EF63 /* oink.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A41949425D0017EF63 /* oink.caf */; };
 		3FBB19AE1949425D0017EF63 /* pop.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A51949425D0017EF63 /* pop.caf */; };
 		3FBB19AF1949425D0017EF63 /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A61949425D0017EF63 /* whack.caf */; };
 /* End PBXBuildFile section */
@@ -69,7 +68,6 @@
 		3FBB19A11949425D0017EF63 /* falling.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = falling.caf; sourceTree = "<group>"; };
 		3FBB19A21949425D0017EF63 /* flapping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = flapping.caf; sourceTree = "<group>"; };
 		3FBB19A31949425D0017EF63 /* hitGround.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hitGround.caf; sourceTree = "<group>"; };
-		3FBB19A41949425D0017EF63 /* oink.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = oink.caf; sourceTree = "<group>"; };
 		3FBB19A51949425D0017EF63 /* pop.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pop.caf; sourceTree = "<group>"; };
 		3FBB19A61949425D0017EF63 /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,7 +206,6 @@
 				3FBB19A11949425D0017EF63 /* falling.caf */,
 				3FBB19A21949425D0017EF63 /* flapping.caf */,
 				3FBB19A31949425D0017EF63 /* hitGround.caf */,
-				3FBB19A41949425D0017EF63 /* oink.caf */,
 				3FBB19A51949425D0017EF63 /* pop.caf */,
 				3FBB19A61949425D0017EF63 /* whack.caf */,
 			);
@@ -305,7 +302,6 @@
 				3FBB199C19493E820017EF63 /* Fipps-Regular.otf in Resources */,
 				3F24F0BC1949391D0066BF14 /* artwork.atlas in Resources */,
 				3FBB19AA1949425D0017EF63 /* falling.caf in Resources */,
-				3FBB19AD1949425D0017EF63 /* oink.caf in Resources */,
 				3FBB19AF1949425D0017EF63 /* whack.caf in Resources */,
 				3F28A08B194968F10006E86F /* copycat.mp3 in Resources */,
 				3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */,

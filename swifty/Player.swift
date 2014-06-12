@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class Player: SKSpriteNode {
     // Init Player
     init(imageNamed name: String!) {
@@ -53,5 +52,6 @@ class Player: SKSpriteNode {
     func fly () {
         self.physicsBody.velocity = CGVectorMake(0, 0)
         self.physicsBody.applyImpulse(CGVectorMake(0, 60))
+        self.runAction(SKAction.playSoundFileNamed(kSoundFly, waitForCompletion: false))
     }
 }

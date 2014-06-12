@@ -28,6 +28,12 @@ class Contact {
     class var Player:UInt32 { return 1 << 2 }
 }
 
+enum GameState:Int {
+    case Tutorial
+    case Play
+    case GameOver
+}
+
 // Shared vars
 var viewSize:CGSize!
 var musicPlayer:AVAudioPlayer!
@@ -43,3 +49,8 @@ let kMusicType = "mp3"
 let kSoundBounce = "bounce.caf"
 let kSoundPop = "pop.caf"
 let kSoundWhack = "whack.caf"
+let kSoundFly = "flapping.caf"
+
+// Positions
+let kCloudPosition = CGPointMake(viewSize.width * 0.9, viewSize.height * 0.65)
+let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)

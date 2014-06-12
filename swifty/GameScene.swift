@@ -11,11 +11,11 @@ import AVFoundation
 
 var player:Player!
 var ground:SKSpriteNode!
+var touchEnabled:Bool!
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
-    // Build errors with this declared here...
-    //var player:Player!
+    var state:GameState = .Tutorial
     
     override func didMoveToView(view: SKView) {
         viewSize = self.frame.size
@@ -25,22 +25,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         }
         
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVectorMake( 0.0, -5.0 )
+        // No gravity at game start. Set to 5 in switchToPlay()
+        self.physicsWorld.gravity = CGVectorMake( 0.0, 0.0 )
+        
+        state = GameState.Tutorial
+        
+        self.scene.userInteractionEnabled = false
         
         self.setupWorld()
         self.setupPlayer()
+        self.runCountDown()
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        
-        for touch: AnyObject in touches {
-            player.fly()
-        }
+        if self.scene.userInteractionEnabled {
+            for touch:AnyObject in touches {
+                switch state {
+                case GameState.Tutorial:
+                    self.switchToPlay()
+                    if kDebug {
+                        println("Tutorial Touch")
+                    }
+                case GameState.Play:
+                    player.fly()
+                    if kDebug {
+                        println("Play Touch")
+                    }
+                case GameState.GameOver:
+                    println("Game Over")
+                    if kDebug {
+                        println("Game Over Touch")
+                    }
+                }
+            }
 
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
-        player.update()
+        if self.scene.userInteractionEnabled {
+            switch state {
+            case GameState.Tutorial:
+                self.switchToPlay()
+            case GameState.Play:
+                player.update()
+            case GameState.GameOver:
+                println("Game Over")
+            }
+        }
     }
     
     func setupWorld () {
@@ -52,14 +84,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         // Clouds
         let clouds = SKSpriteNode(imageNamed: "cloudmonster")
         clouds.anchorPoint = CGPointMake(0.5, 0.5)
-        clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
+        //clouds.position = CGPointMake(viewSize.width * 0.8, viewSize.height * 0.8)
+        clouds.position = kCloudPosition
         clouds.zPosition = GameLayer.Sky
         self.addChild(clouds)
         
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
+        //moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
+        moon.position = kMoonPosition
         moon.zPosition = GameLayer.Sky
         self.addChild(moon)
         
@@ -86,6 +120,53 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         player.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.5)
         player.zPosition = GameLayer.Game
         self.addChild(player)
+    }
+    
+    func switchToPlay () {
+        self.physicsWorld.gravity = CGVectorMake(0, -5.0)
+        state = GameState.Play
+        self.scene.userInteractionEnabled = true
+    }
+    
+    func runCountDown () {
+        var tutorial = SKLabelNode(fontNamed: kGameFont)
+        tutorial.text = "Tap to fly Swifty!"
+        tutorial.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.7)
+        tutorial.zPosition = GameLayer.UI
+        tutorial.fontSize = 36
+        tutorial.fontColor = SKColor.blackColor()
+        self.addChild(tutorial)
+        
+        self.runAction(SKAction.waitForDuration(1.0), completion: {
+            tutorial.removeFromParent()
+            
+            var count = SKLabelNode(fontNamed: kGameFont)
+            count.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.6)
+            count.zPosition = GameLayer.UI
+            count.text = "3"
+            count.fontSize = 72
+            count.fontColor = SKColor.blackColor()
+            count.name = "Count"
+            self.addChild(count)
+            
+            count.setScale(0)
+            count.runAction(SKAction.scaleTo(1.0, duration: 1.0), completion:{
+                count.text = "2"
+                count.setScale(0)
+                count.runAction(SKAction.scaleTo(1.0, duration: 1.0), completion: {
+                    count.text = "1"
+                    count.setScale(0)
+                    count.runAction(SKAction.scaleTo(1.0, duration: 1.0), completion: {
+                        count.text = "Go!"
+                        count.setScale(0)
+                        count.runAction(SKAction.scaleTo(1.0, duration: 1.0), completion: {
+                            count.removeFromParent()
+                            self.switchToPlay()
+                            })
+                        })
+                    })
+                })
+        })
     }
     
     func flashBackground () {
