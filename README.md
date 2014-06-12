@@ -19,5 +19,7 @@ and devices running iOS8 beta.
 ![game menu](http://i165.photobucket.com/albums/u49/kolbenwarrior/th_iOSSimulatorScreenShotJun12201412334PM_zps59419df2.png "Game Menu")
 
 
-![game scene](http://i165.photobucket.com/albums/u49/kolbenwarrior/th_iOSSimulatorScreenShotJun12201412405PM_zps445080d1.png "Game Scene")
+![game scene](http://i165.photobucket.com/albums/u49/kolbenwarrior/tu_iOSSimulatorScreenShotJun12201433853PM_zps47ebc824.png "Game Scene")
+
+![game over](http://i165.photobucket.com/albums/u49/kolbenwarrior/iOSSimulatorScreenShotJun12201433858PM_zps3edb1f64.png "Game Over")
 
