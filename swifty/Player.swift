@@ -14,7 +14,7 @@ class Player: SKSpriteNode {
     init(imageNamed name: String!) {
         super.init(imageNamed: name)
         
-        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height / 2)
+        self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height / 2 )
         self.physicsBody.dynamic = true
         
         self.animate()
@@ -52,6 +52,6 @@ class Player: SKSpriteNode {
     // Fly Player
     func fly () {
         self.physicsBody.velocity = CGVectorMake(0, 0)
-        self.physicsBody.applyImpulse(CGVectorMake(0, 7))
+        self.physicsBody.applyImpulse(CGVectorMake(0, 60))
     }
 }

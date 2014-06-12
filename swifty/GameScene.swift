@@ -11,7 +11,6 @@ import AVFoundation
 
 var player:Player!
 var ground:SKSpriteNode!
-var state:GameState!
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
@@ -26,9 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         }
         
         self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVectorMake( 0.0, -3.0 )
-        
-        state = GameState.Tutorial
+        self.physicsWorld.gravity = CGVectorMake( 0.0, -5.0 )
         
         self.setupWorld()
         self.setupPlayer()
@@ -62,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.7)
+        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
         moon.zPosition = GameLayer.Sky
         self.addChild(moon)
         

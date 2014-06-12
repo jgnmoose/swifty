@@ -27,12 +27,6 @@ class Contact {
     class var Player:UInt32 { return 1 << 2 }
 }
 
-enum GameState {
-    case Tutorial
-    case Play
-    case GameOver
-}
-
 // Shared vars
 var viewSize:CGSize!
 

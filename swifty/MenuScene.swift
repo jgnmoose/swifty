@@ -52,7 +52,7 @@ class MenuScene: SKScene {
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.7)
+        moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
         moon.zPosition = GameLayer.Sky
         self.addChild(moon)
         
