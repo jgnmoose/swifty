@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         var touch:UITouch = touches.anyObject() as UITouch
-        var touchLocation = touch.locationInNode(self)
+        let touchLocation = touch.locationInNode(self)
 
         if self.scene.userInteractionEnabled {
             for touch:AnyObject in touches {
@@ -78,11 +78,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        var other:SKPhysicsBody = contact.bodyA.categoryBitMask == Contact.Player ? contact.bodyB : contact.bodyA
-        
-        if state == GameState.GameOver {
+        if state == GameState.GameOver || state == GameState.Tutorial {
             return
         } else {
+            var other:SKPhysicsBody = contact.bodyA.categoryBitMask == Contact.Player ? contact.bodyB : contact.bodyA
+            
             if other.categoryBitMask == Contact.Scene {
                 // Player hit the ground or edge of the scene
                 if kDebug {
