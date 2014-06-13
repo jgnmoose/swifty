@@ -27,6 +27,7 @@ class Contact {
     class var Scene:UInt32  { return 1 << 0 }
     class var Object:UInt32 { return 1 << 1 }
     class var Player:UInt32 { return 1 << 2 }
+    class var Score:UInt32  { return 1 << 3 }
 }
 
 enum GameState:Int {
@@ -40,10 +41,11 @@ var viewSize:CGSize!
 var musicPlayer:AVAudioPlayer!
 
 // Fonts
-let kGameFont = "Fipps-Regular"
+let kGameFont = "EditUndoBrk"
+let kFontColor = SKColor.blueColor()
 
 // Music
-let kMusicGame = "copycat"
+let kMusicGame = "caustic_chip"
 let kMusicType = "mp3"
 
 // Sounds
@@ -53,6 +55,7 @@ let kSoundWhack = "whack.caf"
 let kSoundFly = "flapping.caf"
 let kSoundFalling = "falling.caf"
 let kSoundHitGround = "hitGround.caf"
+let kSoundScore = "coin.caf"
 
 // Object Names
 let kNameMoon = "Moon"
@@ -64,7 +67,13 @@ let kNameCount = "Count"
 let kNameGameLabel = "Game Label"
 let kNamePlayButton = "Play Button"
 let kNameRetry = "Retry"
+let kNameObstacle = "Spike"
+let kNameScoreLabel = "Score Label"
 
 // Positions
 let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)
 
+// Obstacles
+let kBottomSpikeMinFraction:CGFloat = 0.1
+let kBottomSpikeMaxFraction:CGFloat = 0.6
+let kSpikeGap:CGFloat = 175.0

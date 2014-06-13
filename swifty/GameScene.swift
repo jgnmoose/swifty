@@ -12,11 +12,12 @@ import AVFoundation
 var player:Player!
 var ground:SKSpriteNode!
 var retry:SKLabelNode!
+var score:Int!
+var scoreLabel:SKLabelNode!
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     var state:GameState = .Tutorial
-    var pipeGap:CGFloat = 175.0
     
     override func didMoveToView(view: SKView) {
         viewSize = self.frame.size
@@ -32,6 +33,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         state = GameState.Tutorial
         
         self.scene.userInteractionEnabled = false
+        
+        score = 0
         
         self.setupWorld()
         self.setupPlayer()
@@ -102,6 +105,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                 self.runAction(SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false))
                 
                 self.switchToGameOver()
+            } else if other.categoryBitMask == Contact.Score {
+                self.updateScore()
             }
         }
     }
@@ -142,6 +147,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         city.name = kNameCity
         self.addChild(city)
         
+        // Score Label
+        scoreLabel = SKLabelNode(fontNamed: kGameFont)
+        scoreLabel.text = String(score)
+        scoreLabel.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.8)
+        scoreLabel.fontColor = kFontColor
+        scoreLabel.fontSize = 60
+        scoreLabel.name = kNameScoreLabel
+        
+        
         // Bounding box of playable area
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(0, ground.size.height, viewSize.width, (viewSize.height - ground.size.height)))
         self.physicsBody.categoryBitMask = Contact.Scene
@@ -163,6 +177,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         self.scene.userInteractionEnabled = true
         self.scrollForeground()
         self.startSpawningSpikes()
+        self.addChild(scoreLabel)
     }
     
     func switchToGameOver () {
@@ -177,8 +192,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         gameOverLabel.text = "Game Over"
         gameOverLabel.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.7)
         gameOverLabel.zPosition = GameLayer.UI
-        gameOverLabel.fontSize = 60
-        gameOverLabel.fontColor = SKColor.blackColor()
+        gameOverLabel.fontSize = 96
+        gameOverLabel.fontColor = kFontColor
         gameOverLabel.setScale(0)
         gameOverLabel.name = kNameGameLabel
         self.addChild(gameOverLabel)
@@ -189,8 +204,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         retry.text = "Retry"
         retry.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5)
         retry.zPosition = GameLayer.UI
-        retry.fontSize = 60
-        retry.fontColor = SKColor.blackColor()
+        retry.fontSize = 72
+        retry.fontColor = kFontColor
         retry.name = kNameRetry
         self.addChild(retry)
         
@@ -214,7 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         tutorial.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.7)
         tutorial.zPosition = GameLayer.UI
         tutorial.fontSize = 36
-        tutorial.fontColor = SKColor.blackColor()
+        tutorial.fontColor = kFontColor
         tutorial.name = kNameTutorial
         self.addChild(tutorial)
         
@@ -226,7 +241,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             count.zPosition = GameLayer.UI
             count.text = "3"
             count.fontSize = 72
-            count.fontColor = SKColor.blackColor()
+            count.fontColor = kFontColor
             count.name = kNameCount
             self.addChild(count)
             
@@ -295,43 +310,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     func spawnSpikes () {
         // Bottom spike
         var bottomSpike = self.createSpike("bottom")
-        bottomSpike.name = "BottomSpike"
-        var startX = viewSize.width + bottomSpike.size.width / 2
+        bottomSpike.name = kNameObstacle
+        let startX = viewSize.width + bottomSpike.size.width / 2
         
-        var bottomHeight = UInt32(viewSize.height / 4)
-        var bottomY = arc4random() % bottomHeight + bottomHeight
-        
-        bottomSpike.position = CGPointMake(startX, CGFloat(bottomHeight))
-        
+        // TODO: fix this so correct value returned from randomFloatRange()
+        bottomSpike.position = CGPointMake(startX, viewSize.height * self.randomFloatRange(kBottomSpikeMinFraction, max: kBottomSpikeMaxFraction) * 0.05)
         self.addChild(bottomSpike)
         
+        var scoreNode = SKNode()
+        scoreNode.position = CGPointMake(bottomSpike.size.width + bottomSpike.size.width / 4, 0)
+        scoreNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(bottomSpike.size.width / 2, viewSize.height))
+        scoreNode.physicsBody.dynamic = false
+        scoreNode.physicsBody.categoryBitMask = Contact.Score
+        scoreNode.physicsBody.contactTestBitMask = Contact.Player
+        bottomSpike.addChild(scoreNode)
         
         // Top spike
         var topSpike = self.createSpike("top")
-        topSpike.name = "TopSpike"
-        topSpike.position = CGPointMake(startX, CGFloat(bottomHeight) + topSpike.size.height + pipeGap)
-        
+        topSpike.name = kNameObstacle
+        topSpike.position = CGPointMake(startX, bottomSpike.position.y + bottomSpike.size.height / 2 + topSpike.size.height / 2 + kSpikeGap)
         self.addChild(topSpike)
         
-        //var moveX = -viewSize.width + bottomSpike.size.width
-        //var moveDuration = moveX / kGroundSpeed
-        
-        var scroll = SKAction.moveToX(0 - bottomSpike.size.width, duration: 3.0)
-        var remove = SKAction.removeFromParent()
-        var sequence = SKAction.sequence([scroll, remove])
+        // SKAction
+        let scroll = SKAction.moveToX(0 - bottomSpike.size.width, duration: 3.0)
+        let remove = SKAction.removeFromParent()
+        let sequence = SKAction.sequence([scroll, remove])
         
         bottomSpike.runAction(sequence)
         topSpike.runAction(sequence)
     }
     
     func startSpawningSpikes () {
-        var delay = SKAction.waitForDuration(1.5)
-        var spawn = SKAction.runBlock({
+        let delay = SKAction.waitForDuration(1.5)
+        let spawn = SKAction.runBlock({
             self.spawnSpikes()
         })
-        var sequence = SKAction.sequence([delay, spawn])
-        var repeat = SKAction.repeatActionForever(sequence)
-        var spawnSequence = SKAction.sequence([delay, repeat])
+        let sequence = SKAction.sequence([delay, spawn])
+        let repeat = SKAction.repeatActionForever(sequence)
+        let spawnSequence = SKAction.sequence([delay, repeat])
         
         self.runAction(spawnSequence, withKey: "Spawn")
     }
@@ -348,6 +364,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         })
     }
     
+    func randomFloatRange(min: CGFloat, max: CGFloat) -> CGFloat {
+        // TODO: convert 0xFFFFFFFFu in Swift
+        return CGFloat(UInt(arc4random() / 0xFFFFFFF)) * (max - min) + min
+    }
+    
+    // Scoring
+    func updateScore () {
+        // score++, doesn't work?!
+        score = score + 1
+        scoreLabel.text = String(score)
+        self.runAction(SKAction.playSoundFileNamed(kSoundScore, waitForCompletion: false))
+    }
+    
+    // Game Effects
     func flashBackground () {
     }
 }

@@ -16,11 +16,9 @@
 		3F24F0B0194935770066BF14 /* swiftyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F24F0AF194935770066BF14 /* swiftyTests.swift */; };
 		3F24F0BC1949391D0066BF14 /* artwork.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3F24F0BB1949391D0066BF14 /* artwork.atlas */; };
 		3F24F0BE194939450066BF14 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F24F0BD194939450066BF14 /* Constants.swift */; };
-		3F28A08B194968F10006E86F /* copycat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F28A08A194968F10006E86F /* copycat.mp3 */; };
 		3FBB19931949399A0017EF63 /* GameSceneiPad.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19921949399A0017EF63 /* GameSceneiPad.sks */; };
 		3FBB1995194939BF0017EF63 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB1994194939BF0017EF63 /* Player.swift */; };
 		3FBB199919493AAA0017EF63 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBB199819493AAA0017EF63 /* MenuScene.swift */; };
-		3FBB199C19493E820017EF63 /* Fipps-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199B19493E820017EF63 /* Fipps-Regular.otf */; };
 		3FBB19A71949425D0017EF63 /* bounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199E1949425D0017EF63 /* bounce.caf */; };
 		3FBB19A81949425D0017EF63 /* coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199F1949425D0017EF63 /* coin.caf */; };
 		3FBB19AA1949425D0017EF63 /* falling.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A11949425D0017EF63 /* falling.caf */; };
@@ -28,6 +26,8 @@
 		3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A31949425D0017EF63 /* hitGround.caf */; };
 		3FBB19AE1949425D0017EF63 /* pop.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A51949425D0017EF63 /* pop.caf */; };
 		3FBB19AF1949425D0017EF63 /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A61949425D0017EF63 /* whack.caf */; };
+		3FDF11FA194B4CAD002F4D81 /* caustic_chip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FDF11F9194B4CAD002F4D81 /* caustic_chip.mp3 */; };
+		3FDF11FD194B5320002F4D81 /* editundo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FDF11FB194B5320002F4D81 /* editundo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,11 +54,9 @@
 		3F24F0AF194935770066BF14 /* swiftyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftyTests.swift; sourceTree = "<group>"; };
 		3F24F0BB1949391D0066BF14 /* artwork.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = artwork.atlas; sourceTree = "<group>"; };
 		3F24F0BD194939450066BF14 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Classes/Constants.swift; sourceTree = "<group>"; };
-		3F28A08A194968F10006E86F /* copycat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = copycat.mp3; sourceTree = "<group>"; };
 		3FBB19921949399A0017EF63 /* GameSceneiPad.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameSceneiPad.sks; sourceTree = "<group>"; };
 		3FBB1994194939BF0017EF63 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		3FBB199819493AAA0017EF63 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
-		3FBB199B19493E820017EF63 /* Fipps-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fipps-Regular.otf"; sourceTree = "<group>"; };
 		3FBB199E1949425D0017EF63 /* bounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bounce.caf; sourceTree = "<group>"; };
 		3FBB199F1949425D0017EF63 /* coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.caf; sourceTree = "<group>"; };
 		3FBB19A11949425D0017EF63 /* falling.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = falling.caf; sourceTree = "<group>"; };
@@ -66,6 +64,9 @@
 		3FBB19A31949425D0017EF63 /* hitGround.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hitGround.caf; sourceTree = "<group>"; };
 		3FBB19A51949425D0017EF63 /* pop.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pop.caf; sourceTree = "<group>"; };
 		3FBB19A61949425D0017EF63 /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		3FDF11F9194B4CAD002F4D81 /* caustic_chip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = caustic_chip.mp3; sourceTree = "<group>"; };
+		3FDF11FB194B5320002F4D81 /* editundo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = editundo.ttf; sourceTree = "<group>"; };
+		3FDF11FC194B5320002F4D81 /* editundo.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = editundo.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +180,7 @@
 		3F28A089194968F10006E86F /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				3F28A08A194968F10006E86F /* copycat.mp3 */,
+				3FDF11F9194B4CAD002F4D81 /* caustic_chip.mp3 */,
 			);
 			path = Music;
 			sourceTree = "<group>";
@@ -187,7 +188,8 @@
 		3FBB199A19493E6C0017EF63 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				3FBB199B19493E820017EF63 /* Fipps-Regular.otf */,
+				3FDF11FB194B5320002F4D81 /* editundo.ttf */,
+				3FDF11FC194B5320002F4D81 /* editundo.txt */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -287,16 +289,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FBB19A71949425D0017EF63 /* bounce.caf in Resources */,
+				3FDF11FD194B5320002F4D81 /* editundo.ttf in Resources */,
 				3FBB19AE1949425D0017EF63 /* pop.caf in Resources */,
 				3FBB19A81949425D0017EF63 /* coin.caf in Resources */,
+				3FDF11FA194B4CAD002F4D81 /* caustic_chip.mp3 in Resources */,
 				3FBB19931949399A0017EF63 /* GameSceneiPad.sks in Resources */,
 				3F24F0A4194935760066BF14 /* Images.xcassets in Resources */,
 				3F24F09B194935760066BF14 /* GameSceneiPhone.sks in Resources */,
-				3FBB199C19493E820017EF63 /* Fipps-Regular.otf in Resources */,
 				3F24F0BC1949391D0066BF14 /* artwork.atlas in Resources */,
 				3FBB19AA1949425D0017EF63 /* falling.caf in Resources */,
 				3FBB19AF1949425D0017EF63 /* whack.caf in Resources */,
-				3F28A08B194968F10006E86F /* copycat.mp3 in Resources */,
 				3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */,
 				3FBB19AB1949425D0017EF63 /* flapping.caf in Resources */,
 				3F24F0A2194935760066BF14 /* Main.storyboard in Resources */,

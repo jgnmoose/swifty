@@ -73,8 +73,8 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         let gameLabel = SKLabelNode(fontNamed: kGameFont)
         gameLabel.text = "Swifty"
         gameLabel.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.65)
-        gameLabel.fontSize = 64
-        gameLabel.fontColor = SKColor.blackColor()
+        gameLabel.fontSize = 96
+        gameLabel.fontColor = kFontColor
         gameLabel.zPosition = GameLayer.UI
         gameLabel.name = kNameGameLabel
         self.addChild(gameLabel)
@@ -83,10 +83,11 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         playButton = SKLabelNode(fontNamed: kGameFont)
         playButton.text = "Play"
         playButton.position = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.45)
-        playButton.fontSize = 48
-        playButton.fontColor = SKColor.blackColor()
+        playButton.fontSize = 72
+        playButton.fontColor = kFontColor
         playButton.zPosition = GameLayer.UI
         playButton.name = kNamePlayButton
+        
         self.addChild(playButton)
     }
     
