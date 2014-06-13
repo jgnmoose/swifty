@@ -54,6 +54,17 @@ let kSoundFly = "flapping.caf"
 let kSoundFalling = "falling.caf"
 let kSoundHitGround = "hitGround.caf"
 
+// Object Names
+let kNameMoon = "Moon"
+let kNameCity = "City"
+let kNameGround = "Ground"
+let kNamePlayer = "Player"
+let kNameTutorial = "Tutorial"
+let kNameCount = "Count"
+let kNameGameLabel = "Game Label"
+let kNamePlayButton = "Play Button"
+let kNameRetry = "Retry"
+
 // Positions
 let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)
 

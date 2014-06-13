@@ -20,6 +20,8 @@ class Player: SKSpriteNode {
         self.physicsBody.collisionBitMask = Contact.Scene
         self.physicsBody.contactTestBitMask = Contact.Object | Contact.Scene
         
+        self.name = kNamePlayer
+        
         self.animate()
     }
     
@@ -33,10 +35,7 @@ class Player: SKSpriteNode {
     
     // Animate Player
     func animate() {
-        let animationFrames = [
-            SKTexture(imageNamed: "player0"),
-            SKTexture(imageNamed: "player1")
-        ]
+        let animationFrames = [SKTexture(imageNamed: "player0"), SKTexture(imageNamed: "player1")]
         
         self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(animationFrames, timePerFrame: 0.15)))
     }

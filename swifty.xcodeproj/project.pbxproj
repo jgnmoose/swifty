@@ -23,7 +23,6 @@
 		3FBB199C19493E820017EF63 /* Fipps-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199B19493E820017EF63 /* Fipps-Regular.otf */; };
 		3FBB19A71949425D0017EF63 /* bounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199E1949425D0017EF63 /* bounce.caf */; };
 		3FBB19A81949425D0017EF63 /* coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB199F1949425D0017EF63 /* coin.caf */; };
-		3FBB19A91949425D0017EF63 /* ding.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A01949425D0017EF63 /* ding.caf */; };
 		3FBB19AA1949425D0017EF63 /* falling.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A11949425D0017EF63 /* falling.caf */; };
 		3FBB19AB1949425D0017EF63 /* flapping.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A21949425D0017EF63 /* flapping.caf */; };
 		3FBB19AC1949425D0017EF63 /* hitGround.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3FBB19A31949425D0017EF63 /* hitGround.caf */; };
@@ -62,7 +61,6 @@
 		3FBB199B19493E820017EF63 /* Fipps-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fipps-Regular.otf"; sourceTree = "<group>"; };
 		3FBB199E1949425D0017EF63 /* bounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bounce.caf; sourceTree = "<group>"; };
 		3FBB199F1949425D0017EF63 /* coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = coin.caf; sourceTree = "<group>"; };
-		3FBB19A01949425D0017EF63 /* ding.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ding.caf; sourceTree = "<group>"; };
 		3FBB19A11949425D0017EF63 /* falling.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = falling.caf; sourceTree = "<group>"; };
 		3FBB19A21949425D0017EF63 /* flapping.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = flapping.caf; sourceTree = "<group>"; };
 		3FBB19A31949425D0017EF63 /* hitGround.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = hitGround.caf; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 			children = (
 				3FBB199E1949425D0017EF63 /* bounce.caf */,
 				3FBB199F1949425D0017EF63 /* coin.caf */,
-				3FBB19A01949425D0017EF63 /* ding.caf */,
 				3FBB19A11949425D0017EF63 /* falling.caf */,
 				3FBB19A21949425D0017EF63 /* flapping.caf */,
 				3FBB19A31949425D0017EF63 /* hitGround.caf */,
@@ -289,7 +286,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FBB19A91949425D0017EF63 /* ding.caf in Resources */,
 				3FBB19A71949425D0017EF63 /* bounce.caf in Resources */,
 				3FBB19AE1949425D0017EF63 /* pop.caf in Resources */,
 				3FBB19A81949425D0017EF63 /* coin.caf in Resources */,
