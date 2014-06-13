@@ -48,7 +48,6 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        //moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
         moon.position = kMoonPosition
         moon.zPosition = GameLayer.Sky
         moon.name = kNameMoon

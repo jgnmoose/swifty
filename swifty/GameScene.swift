@@ -114,7 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         // Moon
         let moon = SKSpriteNode(imageNamed: "moon")
         moon.anchorPoint = CGPointMake(0.5, 0.5)
-        //moon.position = CGPointMake(viewSize.width * 0.3, viewSize.height * 0.85)
         moon.position = kMoonPosition
         moon.zPosition = GameLayer.Sky
         moon.name = kNameMoon
@@ -194,6 +193,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         retry.fontColor = SKColor.blackColor()
         retry.name = kNameRetry
         self.addChild(retry)
+        
+        // Guard against accidental tap through
+        self.scene.userInteractionEnabled = false
+        self.runAction(SKAction.waitForDuration(1.0), completion: {
+            self.scene.userInteractionEnabled = true
+        })
     }
     
     func switchToNewGame () {
@@ -213,7 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         tutorial.name = kNameTutorial
         self.addChild(tutorial)
         
-        self.runAction(SKAction.waitForDuration(1.0), completion: {
+        self.runAction(SKAction.waitForDuration(1.5), completion: {
             tutorial.removeFromParent()
             
             let count = SKLabelNode(fontNamed: kGameFont)
