@@ -97,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                 self.switchToGameOver()
                 
             } else if other.categoryBitMask == Contact.Object {
-                // Playr hit some spikes
+                // Player hit some spikes
                 if kDebug {
                     println("Player Hit Spikes")
                 }
@@ -105,7 +105,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                 self.runAction(SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false))
                 
                 self.switchToGameOver()
+                
             } else if other.categoryBitMask == Contact.Score {
+                // Player passed through a score node
                 self.updateScore()
             }
         }
@@ -317,6 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         bottomSpike.position = CGPointMake(startX, viewSize.height * self.randomFloatRange(kBottomSpikeMinFraction, max: kBottomSpikeMaxFraction) * 0.05)
         self.addChild(bottomSpike)
         
+        // Score Node, player passes through this to increase score
         var scoreNode = SKNode()
         scoreNode.position = CGPointMake(bottomSpike.size.width + bottomSpike.size.width / 4, 0)
         scoreNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(bottomSpike.size.width / 2, viewSize.height))
@@ -371,7 +374,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Scoring
     func updateScore () {
-        // score++, doesn't work?!
+        // score++ not working for some odd reason?
         score = score + 1
         scoreLabel.text = String(score)
         self.runAction(SKAction.playSoundFileNamed(kSoundScore, waitForCompletion: false))

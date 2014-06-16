@@ -87,7 +87,6 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         playButton.fontColor = kFontColor
         playButton.zPosition = GameLayer.UI
         playButton.name = kNamePlayButton
-        
         self.addChild(playButton)
     }
     
