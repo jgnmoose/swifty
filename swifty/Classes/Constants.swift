@@ -21,6 +21,7 @@ class GameLayer {
     class var Ground:Float      { return 4 }
     class var Game:Float        { return 5 }
     class var UI:Float          { return 6 }
+    class var Flash:Float       { return 7 }
 }
 
 class Contact {
@@ -67,13 +68,16 @@ let kNameCount = "Count"
 let kNameGameLabel = "Game Label"
 let kNamePlayButton = "Play Button"
 let kNameRetry = "Retry"
-let kNameObstacle = "Spike"
+let kNameSpike = "Spike"
+let kNameSpikeTop = "Top Spike"
+let kNameSpikeBottom = "Bottom Spike"
+let kNameSpikeSpawn = "Spawn"
 let kNameScoreLabel = "Score Label"
 
 // Positions
-let kMoonPosition = CGPointMake(viewSize.width * 0.25, viewSize.height * 0.85)
+let kMoonPosition = CGPoint(x: viewSize.width * 0.25, y: viewSize.height * 0.85)
 
 // Obstacles
 let kBottomSpikeMinFraction:CGFloat = 0.1
 let kBottomSpikeMaxFraction:CGFloat = 0.6
-let kSpikeGap:CGFloat = 175.0
+let kSpikeGap:CGFloat = 125.0
