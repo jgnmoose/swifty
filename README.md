@@ -5,6 +5,9 @@ swifty
 
 **swifty** is a prototype game written in Apple's new programming language, Swift.
 
+Update 07/11/2014: Updated and refactored code to work with Xcode 6 Beta 3 and improve
+game structure and performance. 
+
 I wrote this to go through the exercise of thinking out a simple game I might write
 in Objective-C in the new language. 
 
@@ -15,5 +18,5 @@ to do that later, for now this was really just for playing with Swift.
 **swifty** is known to compile and run fine on with Xcode 6 Beta on OSX 10.10 (Yosemite), 
 the iOS8 Simulator and devices running iOS8 beta.
 
-![swifty demo](http://i165.photobucket.com/albums/u49/kolbenwarrior/Swifty_zps6f85e305.gif "Swifty Demo")
+![swifty demo](http://i.imgur.com/TWCsBSk.gif "Swifty Demo")
 
