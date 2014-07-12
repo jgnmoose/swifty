@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     let keyBestScore = "BestScore"
     
     // Nodes
+    var worldNode = SKNode()
     var cityFar = SKNode()
     var cityNear = SKNode()
     var ground = SKSpriteNode()
@@ -140,6 +141,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Setup functions
     func setupWorld() {
+        self.addChild(worldNode)
+        
         // Sky
         self.backgroundColor = SKColor.whiteColor()
         
@@ -148,7 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         moon.position = kMoonPosition
         moon.zPosition = GameLayer.Sky
         moon.name = kNameMoon
-        self.addChild(moon)
+        worldNode.addChild(moon)
         
         // Ground
         ground = SKSpriteNode(texture: textures.texGround)
@@ -163,7 +166,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         groundCopy.zPosition = ground.zPosition
         groundCopy.name = kNameGround
         ground.addChild(groundCopy)
-        self.addChild(ground)
+        worldNode.addChild(ground)
         
         
         // City Back
@@ -182,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         cityBackCopy.position = CGPoint(x: cityBack.size.width, y: cityBack.position.y)
         cityBackCopy.name = kNameCityFar
         cityFar.addChild(cityBackCopy)
-        self.addChild(cityFar)
+        worldNode.addChild(cityFar)
         
         // City Front
         cityNear.position = CGPointZero
@@ -200,7 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         cityFrontCopy.position = CGPoint(x: cityFront.size.width, y: cityFront.position.y)
         cityFrontCopy.name = kNameCityNear
         cityNear.addChild(cityFrontCopy)
-        self.addChild(cityNear)
+        worldNode.addChild(cityNear)
         
         // Score Label
         scoreLabel = SKLabelNode(fontNamed: kGameFont)
@@ -210,7 +213,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         scoreLabel.fontSize = 60
         scoreLabel.name = kNameScoreLabel
         scoreLabel.hidden = true
-        self.addChild(scoreLabel)
+        worldNode.addChild(scoreLabel)
         
         // Bounding box of playable area
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(0, ground.size.height, viewSize.width, (viewSize.height - ground.size.height)))
@@ -223,7 +226,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: viewSize.width * 0.3, y: viewSize.height * 0.5)
         player.zPosition = GameLayer.Game
-        self.addChild(player)
+        worldNode.addChild(player)
     }
     
     
@@ -260,7 +263,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         gameOverLabel.fontColor = kFontColor
         gameOverLabel.setScale(0)
         gameOverLabel.name = kNameGameLabel
-        self.addChild(gameOverLabel)
+        worldNode.addChild(gameOverLabel)
         
         gameOverLabel.runAction(SKAction.scaleTo(1.0, duration: 1.0))
         
@@ -275,7 +278,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         currentScoreTitle.position = CGPoint(x: viewSize.width * 0.35, y: viewSize.height * 0.6)
         currentScoreTitle.text = "Score:"
         currentScoreTitle.zPosition = GameLayer.UI
-        self.addChild(currentScoreTitle)
+        worldNode.addChild(currentScoreTitle)
         
         let currentScore = SKLabelNode(fontNamed: kGameFont)
         currentScore.fontColor = kFontColor
@@ -284,7 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         currentScore.text = String(score)
         currentScore.zPosition = GameLayer.UI
         currentScore.setScale(0)
-        self.addChild(currentScore)
+        worldNode.addChild(currentScore)
         
         let bestScoreTitle = SKLabelNode(fontNamed: kGameFont)
         bestScoreTitle.fontColor = kFontColor
@@ -292,7 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         bestScoreTitle.position = CGPoint(x: viewSize.width * 0.65, y: viewSize.height * 0.6)
         bestScoreTitle.text = "Best Score:"
         bestScoreTitle.zPosition = GameLayer.UI
-        self.addChild(bestScoreTitle)
+        worldNode.addChild(bestScoreTitle)
         
         let bestScore = SKLabelNode(fontNamed: kGameFont)
         bestScore.fontColor = kFontColor
@@ -301,7 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         bestScore.text = String(self.bestScore())
         bestScore.zPosition = GameLayer.UI
         bestScore.setScale(0)
-        self.addChild(bestScore)
+        worldNode.addChild(bestScore)
         
         let scoreScale = SKAction.scaleTo(1.0, duration: 0.75)
         scoreScale.timingFunction = SKTTimingFunctionElasticEaseIn
@@ -316,7 +319,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         retry.fontSize = 60
         retry.fontColor = kFontColor
         retry.name = kNameRetry
-        self.addChild(retry)
+        worldNode.addChild(retry)
         
         // Guard against accidental tap through
         self.scene.userInteractionEnabled = false
@@ -340,7 +343,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         tutorial.fontSize = 36
         tutorial.fontColor = kFontColor
         tutorial.name = kNameTutorial
-        self.addChild(tutorial)
+        worldNode.addChild(tutorial)
         
         self.runAction(SKAction.waitForDuration(1.5), completion: {
             tutorial.removeFromParent()
@@ -352,7 +355,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             count.fontSize = 72
             count.fontColor = kFontColor
             count.name = kNameCount
-            self.addChild(count)
+            self.worldNode.addChild(count)
             
             count.setScale(0)
             count.runAction(SKAction.scaleTo(1.0, duration: 1.0), completion:{
@@ -377,14 +380,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Scrolling Background
     func scrollBackground() {
-        self.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
             let moveLeft = SKAction.moveByX(-self.textures.texCityBack.size().width / 2, y: 0, duration: self.cityFarSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
             node.runAction(SKAction.repeatActionForever(sequence), withKey: "City Far Scroll")
         })
         
-        self.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
             let moveLeft = SKAction.moveByX(-self.textures.texCityFront.size().width / 2, y: 0, duration: self.cityNearSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
@@ -393,18 +396,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
     
     func stopScrollingBackground() {
-        self.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
             node.removeAllActions()
         })
         
-        self.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
             node.removeAllActions()
         })
     }
     
     // Scrolling Foreground
     func scrollForeground() {
-        self.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
             let moveLeft = SKAction.moveByX(-self.ground.size.width, y: 0, duration: self.foregroundSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
@@ -413,7 +416,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
     
     func stopScrollingForeground() {
-        self.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
             node.removeAllActions()
         })
     }
@@ -423,7 +426,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         let delay = SKAction.waitForDuration(1.0)
         let spawn = SKAction.runBlock({
             let obstacle = self.spike.creatSpikes()
-            self.addChild(obstacle)
+           self.worldNode.addChild(obstacle)
         })
         let sequence = SKAction.sequence([delay, spawn])
         let spawnSequence = SKAction.repeatActionForever(sequence)
@@ -434,11 +437,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     func stopSpawningSpikes() {
         self.removeActionForKey(kNameSpikeSpawn)
         
-        self.enumerateChildNodesWithName(kNameSpikeTop, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameSpikeTop, usingBlock: { node, stop in
             node.removeAllActions()
         })
         
-        self.enumerateChildNodesWithName(kNameSpikeBottom, usingBlock: { node, stop in
+        worldNode.enumerateChildNodesWithName(kNameSpikeBottom, usingBlock: { node, stop in
             node.removeAllActions()
         })
     }
@@ -466,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Game Effects
     func flashBackground() {
-        let shake = SKAction.screenShakeWithNode(player, amount: CGPoint(x: 7, y: 5), oscillations: 10, duration: 0.5)
+        let shake = SKAction.screenShakeWithNode(worldNode, amount: CGPoint(x: 14, y: 10), oscillations: 10, duration: 0.5)
         let colorBackground = SKAction.runBlock({
             self.backgroundColor = SKColor.redColor()
             self.runAction(SKAction.waitForDuration(0.5), completion: {
