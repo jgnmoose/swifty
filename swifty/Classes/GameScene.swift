@@ -108,24 +108,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             var other:SKPhysicsBody = contact.bodyA.categoryBitMask == Contact.Player ? contact.bodyB : contact.bodyA
             
             if other.categoryBitMask == Contact.Scene {
-                // Player hit the ground or edge of the scene
-                if kDebug {
-                    println("Player Hit Ground")
-                }
-                
                 self.runAction(sounds.bounce)
                 self.runAction(sounds.hitGround)
                 
                 self.switchToGameOver()
                 
             } else if other.categoryBitMask == Contact.Object {
-                // Player hit some spikes
-                if kDebug {
-                    println("Player Hit Spikes")
-                }
-                
                 self.runAction(sounds.whack)
-                
                 self.switchToGameOver()
                 
             } else if other.categoryBitMask == Contact.Score {
