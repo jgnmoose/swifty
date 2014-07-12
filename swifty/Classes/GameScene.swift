@@ -9,7 +9,7 @@
 /*****************************************************************************
     Using the iCloud code in this project requires some additional steps.
 
-    More information here:
+    More information provided in the official doc here:
     https://developer.apple.com/library/ios/documentation/General/Conceptual/iCloudDesignGuide/Chapters/Introduction.html
  ******************************************************************************/
 
