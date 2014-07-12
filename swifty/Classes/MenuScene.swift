@@ -15,6 +15,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
     var bounceTimer:NSTimer!
     
     let textures = GameTexturesSharedInstance
+    let sounds = GameSoundsSharedInstance
     
     init(size: CGSize) {
         super.init(size: size)
@@ -111,13 +112,12 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
     func animatePlay () {
         let bounceLarger = SKAction.scaleTo(1.25, duration: 0.15)
         let bounceNormal = SKAction.scaleTo(1.0, duration: 0.15)
-        let bounceSound = SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false)
-        let bounceSequence = SKAction.sequence([bounceLarger, bounceSound, bounceNormal])
+        let bounceSequence = SKAction.sequence([bounceLarger, sounds.pop, bounceNormal])
         playButton.runAction(SKAction.repeatAction(bounceSequence, count: 3))
     }
     
     func switchToPlay () {
-        self.runAction(SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false))
+        self.runAction(sounds.pop)
         
         bounceTimer.invalidate()
         

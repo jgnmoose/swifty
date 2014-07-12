@@ -61,6 +61,8 @@ let kSoundScore = "coin.caf"
 // Object Names
 let kNameMoon = "Moon"
 let kNameCity = "City"
+let kNameCityFar = "City Far"
+let kNameCityNear = "City Near"
 let kNameGround = "Ground"
 let kNamePlayer = "Player"
 let kNameTutorial = "Tutorial"
@@ -76,8 +78,3 @@ let kNameScoreLabel = "Score Label"
 
 // Positions
 let kMoonPosition = CGPoint(x: viewSize.width * 0.25, y: viewSize.height * 0.85)
-
-// Obstacles
-let kBottomSpikeMinFraction:CGFloat = 0.1
-let kBottomSpikeMaxFraction:CGFloat = 0.6
-let kSpikeGap:CGFloat = 125.0

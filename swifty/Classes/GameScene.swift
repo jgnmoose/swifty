@@ -6,21 +6,44 @@
 //  Copyright (c) 2014 Jeremy Novak. All rights reserved.
 //
 
+/*****************************************************************************
+    Using the iCloud code in this project requires some additional steps.
+
+    More information here:
+    https://developer.apple.com/library/ios/documentation/General/Conceptual/iCloudDesignGuide/Chapters/Introduction.html
+ ******************************************************************************/
+
 import SpriteKit
 import AVFoundation
 
 var player:Player!
-var ground:SKSpriteNode!
-var retry:SKLabelNode!
-var score:Int!
-var scoreLabel:SKLabelNode!
 
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
+    // Game Basics
     var state:GameState = .Tutorial
     let textures = GameTexturesSharedInstance
+    let sounds = GameSoundsSharedInstance
     let spike = Spike()
     var score = 0
+    let keyBestScore = "BestScore"
+    
+    // Nodes
+    var cityFar = SKNode()
+    var cityNear = SKNode()
+    var ground = SKSpriteNode()
+    var scoreLabel = SKLabelNode()
+    var retry = SKLabelNode()
+    
+    // Scene constants
+    let cityFarSpeed = 6.0
+    let cityNearSpeed = 4.5
+    let foregroundSpeed = 3.0
+    
+    // Defaults
+    let defaults = NSUserDefaults.standardUserDefaults()
+    // Uncomment for sync with iCloud
+    //let iCloud = NSUbiquitousKeyValueStore.defaultStore()
     
     override func didMoveToView(view: SKView) {
         viewSize = self.frame.size
@@ -33,6 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         
         self.scene.userInteractionEnabled = false
         
+        self.setupData()
         self.setupWorld()
         self.setupPlayer()
         self.runCountDown()
@@ -89,7 +113,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                     println("Player Hit Ground")
                 }
                 
-                self.runAction(SKAction.playSoundFileNamed(kSoundBounce, waitForCompletion: false))
+                self.runAction(sounds.bounce)
+                self.runAction(sounds.hitGround)
                 
                 self.switchToGameOver()
                 
@@ -99,7 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                     println("Player Hit Spikes")
                 }
                 
-                self.runAction(SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false))
+                self.runAction(sounds.whack)
                 
                 self.switchToGameOver()
                 
@@ -110,8 +135,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         }
     }
     
+    func setupData () {
+        // Uncomment for sync with iCloud
+        
+        // Compare the local and cloud values to resolve if different.
+        //let localScore = defaults.integerForKey(keyBestScore)
+        //let cloudScore = Int(iCloud.valueForKey(keyBestScore) as NSNumber)
+        
+        //if localScore == cloudScore {
+        //    return
+        //} else {
+        //    iCloud.setValue(localScore, forKey: keyBestScore)
+        //}
+    }
+    
     // Setup functions
-    func setupWorld () {
+    func setupWorld() {
         // Sky
         self.backgroundColor = SKColor.whiteColor()
         
@@ -139,20 +178,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         
         
         // City Back
+        cityFar.position = CGPointZero
+        cityFar.name = kNameCityFar
+        
         let cityBack = SKSpriteNode(texture: textures.texCityBack)
         cityBack.anchorPoint = CGPointZero
         cityBack.position = CGPoint(x: 0, y: ground.size.height)
         cityBack.zPosition = GameLayer.City
-        cityBack.name = kNameCity
-        self.addChild(cityBack)
+        cityBack.name = kNameCityFar
+        cityFar.addChild(cityBack)
+        
+        let cityBackCopy = SKSpriteNode(texture: textures.texCityBack)
+        cityBackCopy.anchorPoint = CGPointZero
+        cityBackCopy.position = CGPoint(x: cityBack.size.width, y: cityBack.position.y)
+        cityBackCopy.name = kNameCityFar
+        cityFar.addChild(cityBackCopy)
+        self.addChild(cityFar)
         
         // City Front
+        cityNear.position = CGPointZero
+        cityNear.name = kNameCityNear
+        
         let cityFront = SKSpriteNode(texture: textures.texCityFront)
         cityFront.anchorPoint = CGPointZero
         cityFront.position = CGPoint(x: 0, y: ground.size.height)
         cityFront.zPosition = GameLayer.City
-        cityFront.name = kNameCity
-        self.addChild(cityFront)
+        cityFront.name = kNameCityNear
+        cityNear.addChild(cityFront)
+        
+        let cityFrontCopy = SKSpriteNode(texture: textures.texCityFront)
+        cityFrontCopy.anchorPoint = CGPointZero
+        cityFrontCopy.position = CGPoint(x: cityFront.size.width, y: cityFront.position.y)
+        cityFrontCopy.name = kNameCityNear
+        cityNear.addChild(cityFrontCopy)
+        self.addChild(cityNear)
         
         // Score Label
         scoreLabel = SKLabelNode(fontNamed: kGameFont)
@@ -169,7 +228,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         self.physicsBody.categoryBitMask = Contact.Scene
     }
     
-    func setupPlayer () {
+    func setupPlayer() {
         let texture = textures.texPlayer0
         player = Player(texture: texture, color: SKColor.whiteColor(), size: texture.size())
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -180,25 +239,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     
     // Play States
-    func switchToPlay () {
+    func switchToPlay() {
         self.physicsWorld.gravity = CGVectorMake(0, -5.0)
         state = GameState.Play
         self.scene.userInteractionEnabled = true
+        self.scrollBackground()
         self.scrollForeground()
         self.startSpawningSpikes()
         scoreLabel.hidden = false
     }
     
-    func switchToGameOver () {
+    func switchToGameOver() {
         state = GameState.GameOver
         
         self.flashBackground()
         
+        scoreLabel.removeFromParent()
+        
         self.stopSpawningSpikes()
+        self.stopScrollingBackground()
         self.stopScrollingForeground()
         
-        self.runAction(SKAction.playSoundFileNamed(kSoundFalling, waitForCompletion: false))
+        self.runAction(sounds.falling)
         
+        // Game Over Label
         let gameOverLabel = SKLabelNode(fontNamed: kGameFont)
         gameOverLabel.text = "Game Over"
         gameOverLabel.position = CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.7)
@@ -211,9 +275,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         
         gameOverLabel.runAction(SKAction.scaleTo(1.0, duration: 1.0))
         
+        // Score Labels
+        if score > self.bestScore() {
+            self.newHighScore(score)
+        }
+        
+        let currentScoreTitle = SKLabelNode(fontNamed: kGameFont)
+        currentScoreTitle.fontColor = kFontColor
+        currentScoreTitle.fontSize = 16
+        currentScoreTitle.position = CGPoint(x: viewSize.width * 0.35, y: viewSize.height * 0.6)
+        currentScoreTitle.text = "Score:"
+        currentScoreTitle.zPosition = GameLayer.UI
+        self.addChild(currentScoreTitle)
+        
+        let currentScore = SKLabelNode(fontNamed: kGameFont)
+        currentScore.fontColor = kFontColor
+        currentScore.fontSize = 60
+        currentScore.position = CGPoint(x: viewSize.width * 0.35, y: viewSize.height * 0.5)
+        currentScore.text = String(score)
+        currentScore.zPosition = GameLayer.UI
+        currentScore.setScale(0)
+        self.addChild(currentScore)
+        
+        let bestScoreTitle = SKLabelNode(fontNamed: kGameFont)
+        bestScoreTitle.fontColor = kFontColor
+        bestScoreTitle.fontSize = 16
+        bestScoreTitle.position = CGPoint(x: viewSize.width * 0.65, y: viewSize.height * 0.6)
+        bestScoreTitle.text = "Best Score:"
+        bestScoreTitle.zPosition = GameLayer.UI
+        self.addChild(bestScoreTitle)
+        
+        let bestScore = SKLabelNode(fontNamed: kGameFont)
+        bestScore.fontColor = kFontColor
+        bestScore.fontSize = 60
+        bestScore.position = CGPoint(x: viewSize.width * 0.65, y: viewSize.height * 0.5)
+        bestScore.text = String(self.bestScore())
+        bestScore.zPosition = GameLayer.UI
+        bestScore.setScale(0)
+        self.addChild(bestScore)
+        
+        let scoreScale = SKAction.scaleTo(1.0, duration: 0.75)
+        scoreScale.timingFunction = SKTTimingFunctionElasticEaseIn
+        currentScore.runAction(scoreScale)
+        bestScore.runAction(scoreScale)
+        
+        // Retry Button
         retry = SKLabelNode(fontNamed: kGameFont)
         retry.text = "Retry"
-        retry.position = CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.5)
+        retry.position = CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.3)
         retry.zPosition = GameLayer.UI
         retry.fontSize = 60
         retry.fontColor = kFontColor
@@ -227,14 +336,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         })
     }
     
-    func switchToNewGame () {
+    func switchToNewGame() {
         let gameScene = GameScene(size: viewSize)
         gameScene.scaleMode = .AspectFill
         var gameTransition = SKTransition.fadeWithColor(SKColor.blackColor(), duration: 0.1)
         self.view.presentScene(gameScene, transition: gameTransition)
     }
     
-    func runCountDown () {
+    func runCountDown() {
         let tutorial = SKLabelNode(fontNamed: kGameFont)
         tutorial.text = "Tap to fly Swifty!"
         tutorial.position = CGPoint(x: viewSize.width * 0.5, y: viewSize.height * 0.7)
@@ -276,17 +385,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         })
     }
     
-    // Scrolling
-    func scrollForeground () {
-        self.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
-            let moveLeft = SKAction.moveByX(-ground.size.width, y: 0, duration: 3.0)
+    
+    // Scrolling Background
+    func scrollBackground() {
+        self.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
+            let moveLeft = SKAction.moveByX(-self.textures.texCityBack.size().width / 2, y: 0, duration: self.cityFarSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
-            node.runAction(SKAction.repeatActionForever(sequence))
+            node.runAction(SKAction.repeatActionForever(sequence), withKey: "City Far Scroll")
+        })
+        
+        self.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
+            let moveLeft = SKAction.moveByX(-self.textures.texCityFront.size().width / 2, y: 0, duration: self.cityNearSpeed)
+            let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
+            let sequence = SKAction.sequence([moveLeft, reset])
+            node.runAction(SKAction.repeatActionForever(sequence), withKey: "City Near Scroll")
         })
     }
     
-    func stopScrollingForeground () {
+    func stopScrollingBackground() {
+        self.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
+            node.removeAllActions()
+        })
+        
+        self.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
+            node.removeAllActions()
+        })
+    }
+    
+    // Scrolling Foreground
+    func scrollForeground() {
+        self.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
+            let moveLeft = SKAction.moveByX(-self.ground.size.width, y: 0, duration: self.foregroundSpeed)
+            let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
+            let sequence = SKAction.sequence([moveLeft, reset])
+            node.runAction(SKAction.repeatActionForever(sequence), withKey: "Foreground Scroll")
+        })
+    }
+    
+    func stopScrollingForeground() {
         self.enumerateChildNodesWithName(kNameGround, usingBlock: { node, stop in
             node.removeAllActions()
         })
@@ -319,21 +456,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
 
     // Scoring
-    func updateScore () {
+    func updateScore() {
         score++
         scoreLabel.text = String(score)
-        self.runAction(SKAction.playSoundFileNamed(kSoundScore, waitForCompletion: false))
+        self.runAction(sounds.score)
+    }
+    
+    func bestScore() -> Int {
+        return defaults.integerForKey(keyBestScore)
+    }
+    
+    func newHighScore(newScore: Int) {
+        defaults.setInteger(newScore, forKey: keyBestScore)
+        defaults.synchronize()
+        
+        // Uncomment for sync with iCloud
+        //iCloud.setValue(newScore, forKey: keyBestScore)
+        //iCloud.synchronize()
     }
     
     // Game Effects
-    func flashBackground () {
-        self.runAction(SKAction.skt_screenShakeWithNode(player, amount: CGPoint(x: 7, y: 5), oscillations: 10, duration: 0.5))
-        self.runAction(SKAction.runBlock({
+    func flashBackground() {
+        let shake = SKAction.screenShakeWithNode(player, amount: CGPoint(x: 7, y: 5), oscillations: 10, duration: 0.5)
+        let colorBackground = SKAction.runBlock({
             self.backgroundColor = SKColor.redColor()
-            self.runAction(SKAction.waitForDuration(0.25), completion: {
+            self.runAction(SKAction.waitForDuration(0.5), completion: {
                 self.backgroundColor = SKColor.whiteColor()
             })
-            
-        }))
+        })
+        let flashGroup = SKAction.group([shake, colorBackground])
+        self.runAction(flashGroup)
     }
 }

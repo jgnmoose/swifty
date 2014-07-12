@@ -11,6 +11,7 @@ import SpriteKit
 class Player: SKSpriteNode {
     
     let textures = GameTexturesSharedInstance
+    let sounds = GameSoundsSharedInstance
     
     init(texture: SKTexture!, color: UIColor!, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
@@ -53,6 +54,6 @@ class Player: SKSpriteNode {
     func fly () {
         self.physicsBody.velocity = CGVectorMake(0, 0)
         self.physicsBody.applyImpulse(CGVectorMake(0, 10))
-        self.runAction(SKAction.playSoundFileNamed(kSoundFly, waitForCompletion: false))
+        self.runAction(sounds.flying)
     }
 }
