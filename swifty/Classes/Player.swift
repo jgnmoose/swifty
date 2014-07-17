@@ -19,6 +19,11 @@ class Player: SKSpriteNode {
         self.setupPlayer()
     }
     
+    convenience init() {
+        let playerTexture = GameTexturesSharedInstance.texPlayer0
+        self.init(texture: playerTexture, color: SKColor.whiteColor(), size: playerTexture.size())
+    }
+    
     // Player Physics and Properties
     func setupPlayer () {
         self.physicsBody = SKPhysicsBody(circleOfRadius: self.size.height / 2 )

@@ -21,22 +21,24 @@ var player:Player!
 class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Game Basics
-    var state:GameState = .Tutorial
+    var state:GameState = GameState.Tutorial
     let textures = GameTexturesSharedInstance
     let sounds = GameSoundsSharedInstance
-    let spike = Spike()
+    
+    // Scoring
     var score = 0
     let keyBestScore = "BestScore"
     
-    // Nodes
+    // Class Nodes
     var worldNode = SKNode()
     var cityFar = SKNode()
     var cityNear = SKNode()
     var ground = SKSpriteNode()
     var scoreLabel = SKLabelNode()
     var retry = SKLabelNode()
+    let spike = Spike()
     
-    // Scene constants
+    // Scrolling speeds
     let cityFarSpeed = 6.0
     let cityNearSpeed = 4.5
     let foregroundSpeed = 3.0
@@ -50,6 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         viewSize = self.frame.size
         
         self.physicsWorld.contactDelegate = self
+        
         // No gravity at game start. Set in switchToPlay()
         self.physicsWorld.gravity = CGVectorMake( 0.0, 0.0 )
         
@@ -116,10 +119,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
                 
             } else if other.categoryBitMask == Contact.Object {
                 self.runAction(sounds.whack)
+                
                 self.switchToGameOver()
                 
             } else if other.categoryBitMask == Contact.Score {
-                // Player passed through a score node
                 self.updateScore()
             }
         }
@@ -221,8 +224,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     }
     
     func setupPlayer() {
-        let texture = textures.texPlayer0
-        player = Player(texture: texture, color: SKColor.whiteColor(), size: texture.size())
+        player = Player()
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x: viewSize.width * 0.3, y: viewSize.height * 0.5)
         player.zPosition = GameLayer.Game
@@ -245,14 +247,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         state = GameState.GameOver
         
         self.flashBackground()
+        self.runAction(sounds.falling)
         
+        // Cleanup for showing Score
         scoreLabel.removeFromParent()
-        
         self.stopSpawningSpikes()
         self.stopScrollingBackground()
         self.stopScrollingForeground()
         
-        self.runAction(sounds.falling)
         
         // Game Over Label
         let gameOverLabel = SKLabelNode(fontNamed: kGameFont)
@@ -265,6 +267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         gameOverLabel.name = kNameGameLabel
         worldNode.addChild(gameOverLabel)
         
+        // SKAction
         gameOverLabel.runAction(SKAction.scaleTo(1.0, duration: 1.0))
         
         // Score Labels
@@ -272,6 +275,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
             self.newHighScore(score)
         }
         
+        // Score Title
         let currentScoreTitle = SKLabelNode(fontNamed: kGameFont)
         currentScoreTitle.fontColor = kFontColor
         currentScoreTitle.fontSize = 16
@@ -280,6 +284,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         currentScoreTitle.zPosition = GameLayer.UI
         worldNode.addChild(currentScoreTitle)
         
+        // Current Score
         let currentScore = SKLabelNode(fontNamed: kGameFont)
         currentScore.fontColor = kFontColor
         currentScore.fontSize = 60
@@ -289,6 +294,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         currentScore.setScale(0)
         worldNode.addChild(currentScore)
         
+        // Best Score Title
         let bestScoreTitle = SKLabelNode(fontNamed: kGameFont)
         bestScoreTitle.fontColor = kFontColor
         bestScoreTitle.fontSize = 16
@@ -297,6 +303,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         bestScoreTitle.zPosition = GameLayer.UI
         worldNode.addChild(bestScoreTitle)
         
+        // Best Score
         let bestScore = SKLabelNode(fontNamed: kGameFont)
         bestScore.fontColor = kFontColor
         bestScore.fontSize = 60
@@ -306,6 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         bestScore.setScale(0)
         worldNode.addChild(bestScore)
         
+        // SKAction
         let scoreScale = SKAction.scaleTo(1.0, duration: 0.75)
         scoreScale.timingFunction = SKTTimingFunctionElasticEaseIn
         currentScore.runAction(scoreScale)
