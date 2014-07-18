@@ -57,6 +57,7 @@ class Spike {
         bottomSpike.physicsBody.dynamic = false
         bottomSpike.physicsBody.categoryBitMask = Contact.Object
         bottomSpike.physicsBody.contactTestBitMask = Contact.Player
+        CGPathRelease(bottomSpikePath)
         
         // Top Spike shape and Physics
         let topSpikeOffsetX = topSpike.frame.size.width * topSpike.anchorPoint.x
@@ -83,6 +84,7 @@ class Spike {
         topSpike.physicsBody.dynamic = false
         topSpike.physicsBody.categoryBitMask = Contact.Object
         topSpike.physicsBody.contactTestBitMask = Contact.Player
+        CGPathRelease(topSpikePath)
         
         // Score Node
         let scoreNode = SKNode()
