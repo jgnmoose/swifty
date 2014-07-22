@@ -49,7 +49,7 @@ class Player: SKSpriteNode {
         if self.physicsBody.velocity.dy > 30.0 {
             self.zRotation = CGFloat(M_PI / 6.0)
         } else if self.physicsBody.velocity.dy < -100.0 {
-            self.zRotation = CGFloat(-1 * (M_PI / 4.0))
+            self.zRotation = CGFloat(-1 * (M_PI_4))
         } else {
             self.zRotation = 0.0
         }

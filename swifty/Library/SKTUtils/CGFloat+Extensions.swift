@@ -28,23 +28,23 @@ let π = CGFloat(M_PI)
 // These functions are needed for 32-bit architectures
 #if !(arch(x86_64) || arch(arm64))
 func atan2(y: CGFloat, x: CGFloat) -> CGFloat {
-  return atan2f(y, x)
+  return CGFloat(atan2f(Float(y), Float(x)))
 }
 
 func cos(a: CGFloat) -> CGFloat {
-  return cosf(a)
+  return CGFloat(cosf(Float(a)))
 }
 
 func sin(a: CGFloat) -> CGFloat {
-  return sinf(a)
+  return CGFloat(sinf(Float(a)))
 }
 
 func sqrt(a: CGFloat) -> CGFloat {
-  return sqrtf(a)
+  return CGFloat(sqrtf(Float(a)))
 }
 
 func pow(x: CGFloat, y: CGFloat) -> CGFloat {
-  return powf(x, y)
+  return CGFloat(powf(Float(x), Float(y)))
 }
 #endif
 
@@ -90,17 +90,18 @@ extension CGFloat {
   /**
    * Returns a random floating point number between 0.0 and 1.0, inclusive.
    */
-  static func random() -> CGFloat {
-    return CGFloat(arc4random()) / 0xFFFFFFFF
-  }
+//  static func random() -> CGFloat {
+//    return CGFloat(arc4random()) / 0xFFFFFFFF
+//  }
 
   /**
    * Returns a random floating point number in the range min...max, inclusive.
    */
-  static func random(#min: CGFloat, max: CGFloat) -> CGFloat {
-    assert(min < max)
-    return CGFloat.random() * (max - min) + min
-  }
+  //static func random(#min: CGFloat, max: CGFloat) -> CGFloat {
+    //assert(min < max)
+    //return CGFloat.random() * (max - min) + min
+    //return CGFloat(arc4random() / 0xFFFFFFFF) * (max - min) + min
+  //}
 
   /**
    * Randomly returns either 1.0 or -1.0.

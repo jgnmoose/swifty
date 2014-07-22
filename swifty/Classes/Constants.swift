@@ -14,14 +14,14 @@ import AVFoundation
 let kDebug = true
 
 class GameLayer {
-    class var Background:Float  { return 0 }
-    class var Sky:Float         { return 1 }
-    class var City:Float        { return 2 }
-    class var Spikes:Float      { return 3 }
-    class var Ground:Float      { return 4 }
-    class var Game:Float        { return 5 }
-    class var UI:Float          { return 6 }
-    class var Flash:Float       { return 7 }
+    class var Background:CGFloat    { return 0 }
+    class var Sky:CGFloat           { return 1 }
+    class var City:CGFloat          { return 2 }
+    class var Spikes:CGFloat        { return 3 }
+    class var Ground:CGFloat        { return 4 }
+    class var Game:CGFloat          { return 5 }
+    class var UI:CGFloat            { return 6 }
+    class var Flash:CGFloat         { return 7 }
 }
 
 class Contact {

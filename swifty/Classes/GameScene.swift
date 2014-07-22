@@ -315,7 +315,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         
         // SKAction
         let scoreScale = SKAction.scaleTo(1.0, duration: 0.75)
-        scoreScale.timingFunction = SKTTimingFunctionElasticEaseIn
+        //scoreScale.timingFunction = SKTTimingFunctionElasticEaseIn
         currentScore.runAction(scoreScale)
         bestScore.runAction(scoreScale)
         

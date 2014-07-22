@@ -21,7 +21,7 @@ class Spike {
         pair.zPosition = GameLayer.Spikes
         
         // Random Y position on screen
-        let randomY = CGFloat(arc4random()) % CGFloat(viewSize.height / 3)
+        let randomY = CGFloat(Int(arc4random_uniform(UInt32(UInt(viewSize.height / 3)))))
         
         // Top and Bottom Spikes
         let bottomSpike = SKSpriteNode(texture: textures.texSpikeBottom)
@@ -32,59 +32,17 @@ class Spike {
         bottomSpike.position = CGPoint(x: 0, y: randomY)
         topSpike.position = CGPoint(x: bottomSpike.position.x, y: randomY + bottomSpike.size.height + spikeGap)
         
-        // Bottom Spike shape and Physics
-        let bottomSpikeOffsetX = bottomSpike.frame.size.width * bottomSpike.anchorPoint.x
-        let bottomSpikeOffsetY = bottomSpike.frame.size.height * bottomSpike.anchorPoint.y
-        
-        let bottomSpikePath = CGPathCreateMutable()
-        
-        CGPathMoveToPoint(bottomSpikePath, nil, 101 - bottomSpikeOffsetX, 267 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 98 - bottomSpikeOffsetX, 1 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 29 - bottomSpikeOffsetX, 1 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 26 - bottomSpikeOffsetX, 24 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 0 - bottomSpikeOffsetX, 52 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 28 - bottomSpikeOffsetX, 59 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 28 - bottomSpikeOffsetX, 93 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 3 - bottomSpikeOffsetX, 119 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 33 - bottomSpikeOffsetX, 124 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 35 - bottomSpikeOffsetX, 156 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 12 - bottomSpikeOffsetX, 178 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 38 - bottomSpikeOffsetX, 182 - bottomSpikeOffsetY)
-        CGPathAddLineToPoint(bottomSpikePath, nil, 37 - bottomSpikeOffsetX, 217 - bottomSpikeOffsetY)
-        
-        CGPathCloseSubpath(bottomSpikePath)
-        bottomSpike.physicsBody = SKPhysicsBody(polygonFromPath: bottomSpikePath)
+        // Bottom Spike Physics
+        bottomSpike.physicsBody = SKPhysicsBody(polygonFromPath: textures.pathBottomSpike)
         bottomSpike.physicsBody.dynamic = false
         bottomSpike.physicsBody.categoryBitMask = Contact.Object
         bottomSpike.physicsBody.contactTestBitMask = Contact.Player
-        CGPathRelease(bottomSpikePath)
         
-        // Top Spike shape and Physics
-        let topSpikeOffsetX = topSpike.frame.size.width * topSpike.anchorPoint.x
-        let topSpikeOffsetY = topSpike.frame.size.height * topSpike.anchorPoint.y
-        
-        let topSpikePath = CGPathCreateMutable()
-        
-        CGPathMoveToPoint(topSpikePath, nil, 99 - topSpikeOffsetX, 269 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 103 - topSpikeOffsetX, 2 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 36 - topSpikeOffsetX, 55 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 37 - topSpikeOffsetX, 88 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 12 - topSpikeOffsetX, 97 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 34 - topSpikeOffsetX, 115 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 33 - topSpikeOffsetX, 145 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 2 - topSpikeOffsetX, 154 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 29 - topSpikeOffsetX, 175 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 30 - topSpikeOffsetX, 211 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 1 - topSpikeOffsetX, 214 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 27 - topSpikeOffsetX, 244 - topSpikeOffsetY);
-        CGPathAddLineToPoint(topSpikePath, nil, 29 - topSpikeOffsetX, 272 - topSpikeOffsetY);
-        
-        CGPathCloseSubpath(topSpikePath)
-        topSpike.physicsBody = SKPhysicsBody(polygonFromPath: topSpikePath)
+        // Top Spike Physics
+        topSpike.physicsBody = SKPhysicsBody(polygonFromPath: textures.pathTopSpike)
         topSpike.physicsBody.dynamic = false
         topSpike.physicsBody.categoryBitMask = Contact.Object
         topSpike.physicsBody.contactTestBitMask = Contact.Player
-        CGPathRelease(topSpikePath)
         
         // Score Node
         let scoreNode = SKNode()

@@ -54,7 +54,7 @@ extension SKNode {
     if debugDrawEnabled {
       let bodyPath = CGPathCreateWithRect(CGRectMake(-size.width/2.0, -size.height/2.0, size.width, size.height), nil)
       let shape = attachDebugFrameFromPath(bodyPath, color:color)
-      CGPathRelease(bodyPath)
+      //CGPathRelease(bodyPath)
       return shape
     }
     return nil
