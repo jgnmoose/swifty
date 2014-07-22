@@ -39,8 +39,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     let spike = Spike()
     
     // Scrolling speeds
-    let cityFarSpeed = 6.0
-    let cityNearSpeed = 4.5
+    let cityFarSpeed = 7.0
+    let cityNearSpeed = 6.0
     let foregroundSpeed = 3.0
     
     // Defaults
@@ -179,13 +179,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         let cityBack = SKSpriteNode(texture: textures.texCityBack)
         cityBack.anchorPoint = CGPointZero
         cityBack.position = CGPoint(x: 0, y: ground.size.height)
-        cityBack.zPosition = GameLayer.City
+        cityBack.zPosition = GameLayer.CityBack
         cityBack.name = kNameCityFar
         cityFar.addChild(cityBack)
         
-        let cityBackCopy = SKSpriteNode(texture: textures.texCityBack)
+        let cityBackCopy = SKSpriteNode(texture: cityBack.texture)
         cityBackCopy.anchorPoint = CGPointZero
         cityBackCopy.position = CGPoint(x: cityBack.size.width, y: cityBack.position.y)
+        cityBackCopy.zPosition = GameLayer.CityBack
         cityBackCopy.name = kNameCityFar
         cityFar.addChild(cityBackCopy)
         worldNode.addChild(cityFar)
@@ -197,13 +198,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
         let cityFront = SKSpriteNode(texture: textures.texCityFront)
         cityFront.anchorPoint = CGPointZero
         cityFront.position = CGPoint(x: 0, y: ground.size.height)
-        cityFront.zPosition = GameLayer.City
+        cityFront.zPosition = GameLayer.CityFront
         cityFront.name = kNameCityNear
         cityNear.addChild(cityFront)
         
-        let cityFrontCopy = SKSpriteNode(texture: textures.texCityFront)
+        let cityFrontCopy = SKSpriteNode(texture: cityFront.texture)
         cityFrontCopy.anchorPoint = CGPointZero
         cityFrontCopy.position = CGPoint(x: cityFront.size.width, y: cityFront.position.y)
+        cityFrontCopy.zPosition = GameLayer.CityFront
         cityFrontCopy.name = kNameCityNear
         cityNear.addChild(cityFrontCopy)
         worldNode.addChild(cityNear)
@@ -389,14 +391,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     // Scrolling Background
     func scrollBackground() {
         worldNode.enumerateChildNodesWithName(kNameCityFar, usingBlock: { node, stop in
-            let moveLeft = SKAction.moveByX(-self.textures.texCityBack.size().width / 2, y: 0, duration: self.cityFarSpeed)
+            let moveLeft = SKAction.moveByX(-viewSize.width, y: 0, duration: self.cityFarSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
             node.runAction(SKAction.repeatActionForever(sequence), withKey: "City Far Scroll")
         })
         
         worldNode.enumerateChildNodesWithName(kNameCityNear, usingBlock: { node, stop in
-            let moveLeft = SKAction.moveByX(-self.textures.texCityFront.size().width / 2, y: 0, duration: self.cityNearSpeed)
+            let moveLeft = SKAction.moveByX(-viewSize.width, y: 0, duration: self.cityNearSpeed)
             let reset = SKAction.moveTo(CGPoint(x: 0, y: 0), duration: 0)
             let sequence = SKAction.sequence([moveLeft, reset])
             node.runAction(SKAction.repeatActionForever(sequence), withKey: "City Near Scroll")
@@ -477,7 +479,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, AVAudioPlayerDelegate {
     
     // Game Effects
     func flashBackground() {
-        let shake = SKAction.screenShakeWithNode(worldNode, amount: CGPoint(x: 14, y: 10), oscillations: 10, duration: 0.5)
+        let shake = SKAction.screenShakeWithNode(worldNode, amount: CGPoint(x: 20, y: 15), oscillations: 10, duration: 0.75)
         let colorBackground = SKAction.runBlock({
             self.backgroundColor = SKColor.redColor()
             self.runAction(SKAction.waitForDuration(0.5), completion: {

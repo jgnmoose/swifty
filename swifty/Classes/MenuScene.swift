@@ -67,7 +67,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         let cityBack = SKSpriteNode(texture: textures.texCityBack)
         cityBack.anchorPoint = CGPointZero
         cityBack.position = CGPoint(x: 0, y: ground.size.height)
-        cityBack.zPosition = GameLayer.City
+        cityBack.zPosition = GameLayer.CityBack
         cityBack.name = kNameCity
         self.addChild(cityBack)
         
@@ -75,7 +75,7 @@ class MenuScene: SKScene, AVAudioPlayerDelegate {
         let cityFront = SKSpriteNode(texture: textures.texCityFront)
         cityFront.anchorPoint = CGPointZero
         cityFront.position = CGPoint(x: 0, y: ground.size.height)
-        cityFront.zPosition = GameLayer.City
+        cityFront.zPosition = GameLayer.CityFront
         cityFront.name = kNameCity
         self.addChild(cityFront)
         

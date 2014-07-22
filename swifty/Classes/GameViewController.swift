@@ -41,13 +41,7 @@ class GameViewController: UIViewController {
     
     // Supported Interface Orientations
     override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            // iPad can be Portrait or Portrait Upsidedown
-            return Int(UIInterfaceOrientationMask.Portrait.toRaw() | UIInterfaceOrientationMask.PortraitUpsideDown.toRaw())
-        } else {
-            // iPhone/iPod only support Portrait
-            return Int(UIInterfaceOrientationMask.Portrait.toRaw())
-        }
+        return Int(UIInterfaceOrientationMask.Portrait.toRaw())
     }
 
     override func didReceiveMemoryWarning() {

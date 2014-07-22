@@ -16,12 +16,13 @@ let kDebug = true
 class GameLayer {
     class var Background:CGFloat    { return 0 }
     class var Sky:CGFloat           { return 1 }
-    class var City:CGFloat          { return 2 }
-    class var Spikes:CGFloat        { return 3 }
-    class var Ground:CGFloat        { return 4 }
-    class var Game:CGFloat          { return 5 }
-    class var UI:CGFloat            { return 6 }
-    class var Flash:CGFloat         { return 7 }
+    class var CityBack:CGFloat      { return 2 }
+    class var CityFront:CGFloat     { return 3 }
+    class var Spikes:CGFloat        { return 4 }
+    class var Ground:CGFloat        { return 5 }
+    class var Game:CGFloat          { return 6 }
+    class var UI:CGFloat            { return 7 }
+    class var Flash:CGFloat         { return 8 }
 }
 
 class Contact {
