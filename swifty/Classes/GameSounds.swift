@@ -16,13 +16,13 @@ class GameSounds {
     }
     
     var sounds = [SKAction]()
-    var bounce = SKAction.playSoundFileNamed(kSoundBounce, waitForCompletion: false)
-    var score = SKAction.playSoundFileNamed(kSoundScore, waitForCompletion: false)
-    var falling = SKAction.playSoundFileNamed(kSoundFalling, waitForCompletion: false)
-    var flying = SKAction.playSoundFileNamed(kSoundFly, waitForCompletion: false)
-    var hitGround = SKAction.playSoundFileNamed(kSoundHitGround, waitForCompletion: false)
-    var pop = SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false)
-    var whack = SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false)
+    let bounce = SKAction.playSoundFileNamed(kSoundBounce, waitForCompletion: false)
+    let score = SKAction.playSoundFileNamed(kSoundScore, waitForCompletion: false)
+    let falling = SKAction.playSoundFileNamed(kSoundFalling, waitForCompletion: false)
+    let flying = SKAction.playSoundFileNamed(kSoundFly, waitForCompletion: false)
+    let hitGround = SKAction.playSoundFileNamed(kSoundHitGround, waitForCompletion: false)
+    let pop = SKAction.playSoundFileNamed(kSoundPop, waitForCompletion: false)
+    let whack = SKAction.playSoundFileNamed(kSoundWhack, waitForCompletion: false)
     
     init() {
         sounds = [bounce, score, falling, flying, hitGround, pop, whack]

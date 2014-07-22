@@ -12,19 +12,19 @@ let GameTexturesSharedInstance = GameTextures ()
 
 class GameTextures {
     
-    var textureAtlas = SKTextureAtlas()
-    var texCityBack = SKTexture(imageNamed: "city-back")
-    var texCityFront = SKTexture(imageNamed: "city-front")
-    var texGround = SKTexture(imageNamed: "ground")
-    var texPlayer0 = SKTexture(imageNamed: "player0")
-    var texPlayer1 = SKTexture(imageNamed: "player1")
-    var texSpikeBottom = SKTexture(imageNamed: "spikebottom")
-    var texSpikeTop = SKTexture(imageNamed: "spiketop")
-    var texMoon = SKTexture(imageNamed: "moon")
-    
     class var sharedInstance:GameTextures {
         return GameTexturesSharedInstance
     }
+    
+    var textureAtlas = SKTextureAtlas()
+    let texCityBack = SKTexture(imageNamed: "city-back")
+    let texCityFront = SKTexture(imageNamed: "city-front")
+    let texGround = SKTexture(imageNamed: "ground")
+    let texPlayer0 = SKTexture(imageNamed: "player0")
+    let texPlayer1 = SKTexture(imageNamed: "player1")
+    let texSpikeBottom = SKTexture(imageNamed: "spikebottom")
+    let texSpikeTop = SKTexture(imageNamed: "spiketop")
+    let texMoon = SKTexture(imageNamed: "moon")
     
     init() {
         textureAtlas = SKTextureAtlas(named: "artwork")
