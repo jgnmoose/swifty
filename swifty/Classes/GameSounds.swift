@@ -11,7 +11,8 @@ import SpriteKit
 let GameSoundsSharedInstance = GameSounds()
 
 class GameSounds {
-    var sharedInstance:GameSounds {
+   
+    class var sharedInstance:GameSounds {
         return GameSoundsSharedInstance
     }
     
